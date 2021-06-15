@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "watchmen-dqc"
+version = "0.1.0"
+description = ""
+authors = ["luke0623 <luke0623@outlook.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9.2"
+great-expectations = "^0.13.8"
+pandas = "^1.2.1"
+fastapi = "^0.63.0"
+python-dotenv = "^0.15.0"
+trino = "^0.305.0"
+python-igraph = "^0.9.1"
+uvicorn = "^0.13.4"
+prophet = "^1.0.1"
+plotly = "^4.14.3"
+APScheduler = "^3.7.0"
+arrow = "^1.1.0"
+scikit-learn = "^0.24.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
