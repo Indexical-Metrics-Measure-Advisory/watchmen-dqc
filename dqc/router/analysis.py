@@ -21,6 +21,11 @@ class MonitorRulesCriteria(BaseModel):
     topicId: str = None
 
 
+class MonitorRuleRequest(BaseModel):
+    criteria :MonitorRulesCriteria
+
+
+
 ## add rules to topic
 @router.post("/dqc/topic/rules", tags=["admin"], response_model=List[TopicRule])
 async def add_rule_to_topic(topic_rule_list: List[TopicRule]):
@@ -58,9 +63,12 @@ async def save_monitor_rule(rule_list: List[MonitorRule]):
     return rule_list
 
 
-
 @router.post("/dqc/monitor/query", tags=["admin"], response_model=List[MonitorRule])
-async def query_monitor_rules(criteria: MonitorRulesCriteria):
+async def query_monitor_rules(req:MonitorRuleRequest):
+
+    # print(criteria)
+
+    criteria = req.criteria
     if criteria.grade == "global":
         return find_({"grade":"global"},MonitorRule, MONITOR_RULES)
     else:
