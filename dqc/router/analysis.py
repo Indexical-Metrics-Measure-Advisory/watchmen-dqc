@@ -11,7 +11,7 @@ from dqc.model.analysis.factor_rule import FactorRule
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.model.analysis.topic_rule import TopicRule
 
-MONITOR_RULE = "monitor_rule"
+MONITOR_RULES = "monitor_rules"
 
 router = APIRouter()
 
@@ -51,9 +51,10 @@ async def update_factor_rule(factor_rule: FactorRule):
 async def save_monitor_rule(rule_list: List[MonitorRule]):
     for monitor_rule in rule_list:
         if monitor_rule.uid is None:
-            insert_one(monitor_rule, MonitorRule, MONITOR_RULE)
+            monitor_rule.uid  = get_next_id()
+            insert_one(monitor_rule, MonitorRule, MONITOR_RULES)
         else:
-            update_one_with_key(monitor_rule, MonitorRule, MONITOR_RULE, "uid")
+            update_one_with_key(monitor_rule, MonitorRule, MONITOR_RULES, "uid")
     return rule_list
 
 
@@ -61,8 +62,8 @@ async def save_monitor_rule(rule_list: List[MonitorRule]):
 @router.post("/dqc/monitor/query", tags=["admin"], response_model=List[MonitorRule])
 async def query_monitor_rules(criteria: MonitorRulesCriteria):
     if criteria.grade == "global":
-        return find_({"grade":"global"},MonitorRule, MONITOR_RULE)
+        return find_({"grade":"global"},MonitorRule, MONITOR_RULES)
     else:
-        return find_({"grade":"topic","topicId":criteria.topicId},MonitorRule, MONITOR_RULE)
+        return find_({"grade":"topic","topicId":criteria.topicId},MonitorRule, MONITOR_RULES)
 
 
