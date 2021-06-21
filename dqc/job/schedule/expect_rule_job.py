@@ -12,7 +12,7 @@ from dqc.model.analysis.factor_summary import FactorSummary
 from dqc.model.analysis.topic_summary import TopicSummary
 from dqc.model.catalog.topic_knn_result import TopicKnnResult
 from dqc.service.query.index import query_topic_data_by_datetime
-from dqc.service.rule.index import find_rule_func
+from dqc.rule.index import find_rule_func
 
 REPORT_FACTOR_SUMMARY = "report_factor_summary"
 

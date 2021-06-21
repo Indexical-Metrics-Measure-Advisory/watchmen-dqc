@@ -25,10 +25,10 @@ class Settings(BaseSettings):
     #     elif isinstance(v, (list, str)):
     #         return v
     #     raise ValueError(v)
-
-    PROJECT_NAME: str
-    MONGO_HOST: str = ""
-    MONGO_PORT: int = 0
+    STORAGE_ENGINE:str = "mongo"
+    PROJECT_NAME: str ="local-test"
+    MONGO_HOST: str = "localhost"
+    MONGO_PORT: int = 27017
     PRESTO_HTTP_URL = "http://localhost:8080"
     PRESTO_HOST = "localhost"
     PRESTO_PORT = 8080

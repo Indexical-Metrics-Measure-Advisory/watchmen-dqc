@@ -1,0 +1,10 @@
+{
+
+  "local": {
+    "host": "http://localhost:8000/",
+    "username": "imma-admin",
+    "password": "abc1234"
+  }
+
+}
+

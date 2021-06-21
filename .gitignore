@@ -132,6 +132,7 @@ data/
 
 # mkdocs documentation
 /site
+/graph_ml
 
 # mypy
 .mypy_cache/
