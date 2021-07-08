@@ -36,9 +36,9 @@ def __try_convert_pandas_type(df_series,pandas_type):
     flag:bool = False
     try:
         df_series.astype(pandas_type)
-        flag = True
+        # flag = False
     except:
-        flag = False
+        flag = True
     finally:
         return flag
 
@@ -48,8 +48,20 @@ def __convert_pandas_type(factor_type):
             return "float64"
         elif factor_type =="sequence":
             return "int64"
+        elif factor_type =="datetime":
+            return "datetime64"
         else:
             return  None
+
+def check_date_type(df_series,factor_type):
+    return  __try_convert_pandas_type(df_series,__convert_pandas_type(factor_type))
+
+
+
+
+
+
+
 
 def check_value_match_type(df_series, factor_type):
     if factor_type == "unsigned":

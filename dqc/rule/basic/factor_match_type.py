@@ -19,12 +19,16 @@ def init():
         else:
             factor_list = topic["factors"]
             factor_rule_result_list = []
+
+
+
             for factor in factor_list:
-                factor_rule_result = init_factor_rule_result(rule, topic)
+                factor_rule_result = init_factor_rule_result(rule, topic,factor)
                 factor_type = factor["type"]
                 value = df[factor["name"].lower()]
                 factor_rule_result.result = check_value_match_type(value,factor_type)
                 factor_rule_result_list.append(factor_rule_result)
+
             return FACTOR_RULE,factor_rule_result_list
 
     return factor_match_type
