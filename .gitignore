@@ -5,6 +5,7 @@ __pycache__/
 presto
 mongo
 distributions
+test
 
 # C extensions
 *.so
