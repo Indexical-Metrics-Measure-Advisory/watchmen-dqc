@@ -2,7 +2,7 @@
 
   "local": {
     "host": "http://localhost:8000/",
-    "username": "imma-admin",
+    "username": "demo_user",
     "password": "abc1234"
   }
 

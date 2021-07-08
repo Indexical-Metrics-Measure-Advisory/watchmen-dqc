@@ -32,6 +32,24 @@ def __check_date_time(cell):
 #     else:
 #         return False
 
+def __try_convert_pandas_type(df_series,pandas_type):
+    flag:bool = False
+    try:
+        df_series.astype(pandas_type)
+        flag = True
+    except:
+        flag = False
+    finally:
+        return flag
+
+
+def __convert_pandas_type(factor_type):
+        if factor_type=="number":
+            return "float64"
+        elif factor_type =="sequence":
+            return "int64"
+        else:
+            return  None
 
 def check_value_match_type(df_series, factor_type):
     if factor_type == "unsigned":
@@ -44,7 +62,17 @@ def check_value_match_type(df_series, factor_type):
         return df_series.between(1000,3000).all()
     elif factor_type == "half-year":
         return (df_series.between(1,2)).all()
+    elif factor_type =="sequence":
+        return  __try_convert_pandas_type(df_series,__convert_pandas_type(factor_type))
+    elif factor_type =="number":
+        return  __try_convert_pandas_type(df_series,__convert_pandas_type(factor_type))
+    elif factor_type =="quarter":
+        return (df_series.between(1,4)).all()
+    elif factor_type =="day-of-month":
+        return (df_series.between(1,31)).all()
+
     # quarter
+
     #month
     #half - month
     # half-month
@@ -63,7 +91,7 @@ def check_value_match_type(df_series, factor_type):
 
 
 
-
+    ## TODO more type support
 
 
 

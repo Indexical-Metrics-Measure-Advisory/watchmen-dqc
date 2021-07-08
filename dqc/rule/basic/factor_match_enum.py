@@ -2,7 +2,7 @@ from pandas import DataFrame
 
 from dqc.common.constants import TOPIC_RULE, FACTOR_RULE
 from dqc.model.analysis.monitor_rule import MonitorRule
-from dqc.model.analysis.topic_rule_result import TopicRuleResult
+from dqc.model.analysis.rule_result import TopicRuleResult
 
 
 
