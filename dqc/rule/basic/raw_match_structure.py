@@ -26,4 +26,5 @@ def init():
             topic_rule_result.params = {"missing_factors": missing_factors}
             return TOPIC_RULE, topic_rule_result
 
+
     return raw_match_structure
