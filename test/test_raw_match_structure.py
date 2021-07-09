@@ -11,24 +11,17 @@ from dqc.service.query.index import query_topic_data_by_datetime
 
 class MyTestCase(unittest.TestCase):
 
-
     def __find_factor_match_type(self):
         rule_list = load_global_rule_list()
         for rule in rule_list:
-            if rule.code =="factor-match-type":
+            if rule.code == "raw-match-structure":
                 return rule
-
 
     def test_raw_match_structure(self):
 
-
         rule = self.__find_factor_match_type()
 
-
-
-
-
-        func = factor_match_type.init()
+        func = raw_match_structure.init()
         site: dict = load_site_json()
         print(site)
         topic_list = load_all_topic_list(site["local"])
@@ -39,7 +32,7 @@ class MyTestCase(unittest.TestCase):
         for topic in filtered:
             data_frame = query_topic_data_by_datetime("topic_gimo_policy_change", None, None)
             # data_frame = __get_topic_data(, None, None)
-            print(func(data_frame, topic,rule))
+            print(func(data_frame, topic, rule))
 
         # profile = ProfileReport(data_frame, title="Pandas Profiling Report")
         #
