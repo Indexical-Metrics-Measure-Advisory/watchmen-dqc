@@ -1,9 +1,10 @@
 import pandas as pd
 
 from dqc.presto.presto_client import get_connection
+from dqc.rule.utils.factor_utils import find_factor_by_name, __convert_pandas_type
 
 
-def query_topic_data_by_datetime(topic_name, from_datetime, to_datetime):
+def query_topic_data_by_datetime(topic_name, from_datetime, to_datetime, topic=None):
     ## count data
 
     ##TODO between datetime
@@ -16,7 +17,17 @@ def query_topic_data_by_datetime(topic_name, from_datetime, to_datetime):
     columns = list([desc[0] for desc in cur.description])
     df = pd.DataFrame(rows, columns=columns)
 
-    return df
+    # print(.dtypes)
+
+    return convert_df_dtype(df, topic)
 
 
+def convert_df_dtype(df, topic):
+    dtype_dict = {}
+    # print(df.columns)
+    for column in df.columns:
+        factor = find_factor_by_name(topic["factors"], column)
+        if factor is not None:
+            dtype_dict[column] = __convert_pandas_type(factor["type"])
 
+    return df.astype(dtype_dict)

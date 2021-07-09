@@ -8,7 +8,7 @@ from dqc.model.analysis.rule_result import TopicRuleResult
 
 
 def init():
-    def factor_match_enum(df: DataFrame, topic,rule:MonitorRule):
+    def factor_mismatch_enum(df: DataFrame, topic,rule:MonitorRule):
 
 
 
@@ -25,4 +25,4 @@ def init():
         #     topic_rule_result.result = False
 
         return FACTOR_RULE, {}
-    return factor_match_enum
+    return factor_mismatch_enum

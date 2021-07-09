@@ -9,7 +9,7 @@ log = logging.getLogger("app." + __name__)
 
 
 def init():
-    def raw_match_structure(df: DataFrame, topic, rule=None):
+    def raw_mismatch_structure(df: DataFrame, topic, rule=None):
         if table_not_exist(df) or data_is_empty(df):
             return TOPIC_RULE, None
         else:
@@ -27,4 +27,4 @@ def init():
             return TOPIC_RULE, topic_rule_result
 
 
-    return raw_match_structure
+    return raw_mismatch_structure

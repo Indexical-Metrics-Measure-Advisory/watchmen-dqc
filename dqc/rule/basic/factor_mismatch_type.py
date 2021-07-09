@@ -15,7 +15,7 @@ log = logging.getLogger("app." + __name__)
 
 def init():
 
-    def factor_match_type(df: DataFrame, topic: dict, rule: MonitorRule):
+    def factor_mismatch_type(df: DataFrame, topic: dict, rule: MonitorRule):
 
         if table_not_exist(df) or data_is_empty(df):
             return FACTOR_RULE, None
@@ -35,4 +35,4 @@ def init():
 
             return FACTOR_RULE,factor_rule_result_list
 
-    return factor_match_type
+    return factor_mismatch_type

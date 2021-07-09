@@ -7,14 +7,11 @@ from dqc.rule.utils.topic_utils import table_not_exist, data_is_empty, init_fact
 
 
 def init():
-    def factor_match_date_type(df: DataFrame, topic, rule: MonitorRule):
+    def factor_mismatch_date_type(df: DataFrame, topic, rule: MonitorRule):
         if table_not_exist(df) or data_is_empty(df):
             return FACTOR_RULE, None
         else:
-
-
             factor_rule_result_list = []
-
             factor_filtered = get_execute_factor_list(rule, topic)
 
             for factor in factor_filtered:
@@ -22,7 +19,7 @@ def init():
                 # print(factor)
                 factor_type = factor["type"]
                 value = df[factor["name"].lower()]
-                factor_rule_result.result = check_date_type(value, factor_type)
+                factor_rule_result.result = not check_date_type(value, factor_type)
                 factor_rule_result_list.append(factor_rule_result)
 
             return FACTOR_RULE, factor_rule_result_list
@@ -36,4 +33,4 @@ def init():
                 lambda factor: factor["type"] in ["date", "datetime", "full-datetime", "date-of-birth"], factor_list)
         return factor_filtered
 
-    return factor_match_date_type
+    return factor_mismatch_date_type

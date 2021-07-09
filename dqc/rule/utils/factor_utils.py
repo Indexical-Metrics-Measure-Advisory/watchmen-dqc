@@ -4,6 +4,8 @@ from datetime import datetime, date
 import arrow
 import pandas as pd
 
+from dqc.model.analysis.monitor_rule import MonitorRule
+
 log = logging.getLogger("app." + __name__)
 
 
@@ -29,11 +31,12 @@ def __try_convert_pandas_type(df_series, pandas_type):
     flag: bool = False
     try:
         df_series.astype(pandas_type)
-        # flag = False
-    except:
         flag = True
+    except:
+        flag = False
     finally:
         return flag
+
 
 def find_factor(factor_list, factor_id):
     factor_filtered = filter(lambda factor: factor["factorId"] == factor_id,
@@ -42,15 +45,25 @@ def find_factor(factor_list, factor_id):
     return factor_filtered
 
 
+def find_factor_by_name(factor_list, factor_name):
+    factor_filtered = list(filter(lambda factor: factor["name"].lower() == factor_name,
+                             factor_list))
+    if factor_filtered:
+        return factor_filtered[0]
+    else:
+        return None
+
+
 def __convert_pandas_type(factor_type):
-    if factor_type in ["number", "unsigned" ]:
+    if factor_type in ["number", "unsigned"]:
         return "float64"
     elif factor_type in ["sequence", "year", "half-year", "quarter", "month", "half-month", "ten-days", "week-of-year",
-                         "week-of-month", "half-week", "day-of-month","day-of-week","day-kind","hour","hour-kind","minute","second","millisecond","am-pm"]:
+                         "week-of-month", "half-week", "day-of-month", "day-of-week", "day-kind", "hour", "hour-kind",
+                         "minute", "second", "millisecond", "am-pm"]:
         return "int64"
-    elif factor_type in ["datetime","full-datetime","date","data-of-birth"]:
+    elif factor_type in ["datetime", "full-datetime", "date", "data-of-birth"]:
         return "datetime64"
-    elif factor_type =="boolean":
+    elif factor_type == "boolean":
         return "bool"
     else:
         return "object"
@@ -58,6 +71,16 @@ def __convert_pandas_type(factor_type):
 
 def check_date_type(df_series, factor_type):
     return __try_convert_pandas_type(df_series, __convert_pandas_type(factor_type))
+
+
+def check_is_empty(df_series, rule=None):
+    return df_series.empty
+
+
+def check_value_range(df_series, rule: MonitorRule = None,factor=None):
+    range_min = int(rule.params.min)
+    range_max = int(rule.params.max)
+    return df_series.between(range_min, range_max).all()
 
 
 def check_value_match_type(df_series, factor_type):
