@@ -77,6 +77,16 @@ def check_is_empty(df_series, rule=None):
     return df_series.empty
 
 
+def check_max_in_range(df_series, rule,factor=None):
+    max = df_series.max()
+    print("max",max)
+    range_min = int(rule.params.min)
+    range_max = int(rule.params.max)
+    return range_min<max<range_max
+
+
+
+
 def check_value_range(df_series, rule: MonitorRule = None,factor=None):
     range_min = int(rule.params.min)
     range_max = int(rule.params.max)

@@ -31,3 +31,17 @@ def convert_df_dtype(df, topic):
             dtype_dict[column] = __convert_pandas_type(factor["type"])
 
     return df.astype(dtype_dict)
+
+
+def __build_topic_name(topic_name):
+    return "topic_"+topic_name
+
+
+def query_topic_data_count_by_datetime(topic, from_datetime, to_datetime):
+    topic_sql = "select count(*) from {0} ".format(__build_topic_name(topic["name"]))
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(topic_sql)
+    row = cur.fetchone()
+    return row[0]
+
