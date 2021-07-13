@@ -18,7 +18,7 @@ def init():
         statistical_interval = rule.params.statisticalInterval
         #TODO date range
         start_date, end_date = get_date_range(statistical_interval)
-        prior_start_date,prior_end_date = get_date_range_with_end_date(start_date)
+        prior_start_date,prior_end_date = get_date_range_with_end_date(statistical_interval,start_date)
         coverage_rate = rule.params.coverageRate
         current_count = len(df.index)
         prior_count  = query_topic_data_count_by_datetime(topic, prior_start_date, prior_end_date)

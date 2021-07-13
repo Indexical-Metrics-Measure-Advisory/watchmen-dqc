@@ -47,7 +47,7 @@ def find_factor(factor_list, factor_id):
 
 def find_factor_by_name(factor_list, factor_name):
     factor_filtered = list(filter(lambda factor: factor["name"].lower() == factor_name,
-                             factor_list))
+                                  factor_list))
     if factor_filtered:
         return factor_filtered[0]
     else:
@@ -73,21 +73,47 @@ def check_date_type(df_series, factor_type):
     return __try_convert_pandas_type(df_series, __convert_pandas_type(factor_type))
 
 
-def check_is_empty(df_series, rule=None):
+def check_is_empty(df_series, rule=None, factor=None):
     return df_series.empty
 
 
-def check_max_in_range(df_series, rule,factor=None):
-    max = df_series.max()
-    print("max",max)
+def check_max_in_range(df_series, rule, factor=None):
+    df_max = df_series.max()
+    return check_value_in_range(df_max, rule)
+
+
+def check_min_in_range(df_series, rule, factor=None):
+    df_min = df_series.min()
+    return check_value_in_range(df_min, rule)
+
+
+def check_median_in_range(df_series, rule):
+    df_med = df_series.median()
+    return check_value_in_range(df_med,rule)
+
+
+def check_avg_in_range(df_series,rule):
+    df_avg = df_series.avg()
+    return check_value_in_range(df_avg,rule)
+
+
+def check_std_in_range(df_series,rule):
+    df_std = df_series.std()
+    return check_value_in_range(df_std, rule)
+
+
+def check_quantile_in_range(df_series,rule):
+    df_quantile = df_series.quantile()
+    return check_value_in_range(df_quantile,rule)
+
+
+def check_value_in_range(value, rule):
     range_min = int(rule.params.min)
     range_max = int(rule.params.max)
-    return range_min<max<range_max
+    return range_min < value < range_max
 
 
-
-
-def check_value_range(df_series, rule: MonitorRule = None,factor=None):
+def check_value_range(df_series, rule: MonitorRule = None, factor=None):
     range_min = int(rule.params.min)
     range_max = int(rule.params.max)
     return df_series.between(range_min, range_max).all()
