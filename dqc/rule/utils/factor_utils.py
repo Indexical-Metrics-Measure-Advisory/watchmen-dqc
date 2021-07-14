@@ -82,6 +82,11 @@ def check_max_in_range(df_series, rule, factor=None):
     return check_value_in_range(df_max, rule)
 
 
+def check_common_value_in_range(df_series,rule,factor=None):
+    common_value = df_series.mode().loc[0]
+    return check_value_in_range(common_value,rule)
+
+
 def check_min_in_range(df_series, rule, factor=None):
     df_min = df_series.min()
     return check_value_in_range(df_min, rule)

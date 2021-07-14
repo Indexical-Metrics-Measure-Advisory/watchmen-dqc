@@ -1,4 +1,4 @@
-from storage.storage.storage_template import find_, insert_one, update_, find_one
+from storage.storage.storage_template import find_, insert_one, update_, find_one, list_all
 
 from dqc.common.simpleflake import get_next_id
 from dqc.model.analysis.monitor_rule import MonitorRule
@@ -13,6 +13,10 @@ def load_global_rule_list():
 def load_topic_rule_list_by_topic_id(topic_id):
     results = find_({"topicId": topic_id}, MonitorRule, MONITOR_RULES)
     return results
+
+
+def load_monitor_rule_all():
+    return list_all(MonitorRule, MONITOR_RULES)
 
 
 def load_monitor_rule(monitor_rule):
