@@ -8,7 +8,6 @@ from dqc.rule.utils.factor_utils import find_factor_by_name, __convert_pandas_ty
 
 
 def query_topic_data_by_datetime(topic_name, from_datetime, to_datetime, topic=None):
-
     topic_sql = "select * from {0} where update_time_ between timestamp '{1}' and  timestamp '{2}'".format(
         __build_topic_name(topic_name), from_datetime.format('YYYY-MM-DD'), to_datetime.format('YYYY-MM-DD'))
     conn = get_connection()
@@ -46,26 +45,25 @@ def query_topic_data_count_by_datetime(topic, from_datetime, to_datetime):
     row = cur.fetchone()
     return row[0]
 
-def generate_monitor_log_query(criteria:MonitorRuleLogCriteria):
+
+def generate_monitor_log_query(criteria: MonitorRuleLogCriteria):
     start = arrow.get(criteria.startDate)
     end = arrow.get(criteria.endDate)
     if criteria.ruleCode is None:
-        return  "select sum(count) as count,rulecode from {0} where update_time_ between timestamp '{1}' and  timestamp '{2}' GROUP BY rulecode".format(
+        return "select sum(count) as count,rulecode from {0} where update_time_ between timestamp '{1}' and  timestamp '{2}' GROUP BY rulecode".format(
             'topic_rule_aggregate', start.format('YYYY-MM-DD HH:mm:ss ZZ'),
             end.format('YYYY-MM-DD HH:mm:ss ZZ'))
     elif criteria.topicId is None:
         return "select sum(count) as count,rulecode,topicid from {0} where rulecode = '{1}' and update_time_ between timestamp '{2}' and  timestamp '{3}' GROUP BY rulecode,topicid".format(
-            'topic_rule_aggregate',criteria.ruleCode, start.format('YYYY-MM-DD HH:mm:ss ZZ'),
+            'topic_rule_aggregate', criteria.ruleCode, start.format('YYYY-MM-DD HH:mm:ss ZZ'),
             end.format('YYYY-MM-DD HH:mm:ss ZZ'))
     elif criteria.factorId is None:
-        return "select sum(count) as count,rulecode,topicid, factorid  from {0} where update_time_ between timestamp '{1}' and  timestamp '{2}' GROUP BY rulecode,topicid,factorid".format(
-            'topic_rule_aggregate', start.format('YYYY-MM-DD HH:mm:ss ZZ'),
+        return "select sum(count) as count,rulecode,topicid, factorid  from {0} where rulecode = '{1}' and topicid = '{2}' and update_time_ between timestamp '{3}' and  timestamp '{4}' GROUP BY rulecode,topicid,factorid".format(
+            'topic_rule_aggregate', criteria.ruleCode, criteria.topicId, start.format('YYYY-MM-DD HH:mm:ss ZZ'),
             end.format('YYYY-MM-DD HH:mm:ss ZZ'))
 
 
 def query_rule_results_by_datetime(criteria):
-
-
     topic_sql = generate_monitor_log_query(criteria)
 
     print(topic_sql)
@@ -75,17 +73,17 @@ def query_rule_results_by_datetime(criteria):
     rows = cur.fetchall()
     columns = list([desc[0] for desc in cur.description])
     df = pd.DataFrame(rows, columns=columns)
-    rule_results =[]
+    rule_results = []
     for row in df.itertuples(index=True, name='Pandas'):
         rule_log = MonitorRuleLog()
-        rule_log.count= float(row.count)
+        rule_log.count = float(row.count)
         if criteria.ruleCode:
             rule_log.topicId = row.topicid
 
         if criteria.topicId:
             rule_log.factorId = row.factorid
 
-        rule_log.ruleCode =row.rulecode
+        rule_log.ruleCode = row.rulecode
         rule_results.append(rule_log)
 
     return rule_results
