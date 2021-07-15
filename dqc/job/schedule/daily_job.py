@@ -58,11 +58,19 @@ def find_rule_func(rule_code, rule_type=None):
         log.warning(e)
 
 
+def trigger_rule(topicResult):
+    return topicResult.result
+
+
 def __save_rule_result(rule_result_summary: RuleExecuteResult, site_info):
     if rule_result_summary and rule_result_summary.ruleType == TOPIC_RULE:
-        print("test ---------------------------------------ss")
-        # instance = {"code": "system_rule_result", "data": rule_result_summary.topicResult}
-        import_instance(InstanceRequest(code="system_rule_result",data=rule_result_summary.topicResult), site_info)
+        if trigger_rule(rule_result_summary.topicResult):
+            import_instance(InstanceRequest(code="system_rule_result",data=rule_result_summary.topicResult), site_info)
+    elif rule_result_summary and rule_result_summary.ruleType == FACTOR_RULE:
+        factor_results = rule_result_summary.factorResult
+        for factor_result in factor_results:
+            if trigger_rule(factor_result):
+                import_instance(InstanceRequest(code="system_rule_result",data=factor_result), site_info)
 
 
 def execute_topic_rule(enabled_rules, execute_topic, site_info):
