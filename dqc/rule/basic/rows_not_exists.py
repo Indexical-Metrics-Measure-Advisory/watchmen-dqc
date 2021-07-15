@@ -7,11 +7,10 @@ from dqc.rule.utils.topic_utils import data_is_empty, table_not_exist, init_topi
 
 def init():
     def rows_not_exists(df: DataFrame, topic,rule:MonitorRule):
-        topic_rule_result = init_topic_rule_result(rule, topic)
+        execute_result = init_topic_rule_result(rule, topic)
         if table_not_exist(df) or data_is_empty(df):
-            topic_rule_result.result = True
+            execute_result.topicResult.result = True
         else:
-            topic_rule_result.result = False
-
-        return TOPIC_RULE, topic_rule_result
+            execute_result.topicResult.result = False
+        return execute_result
     return rows_not_exists

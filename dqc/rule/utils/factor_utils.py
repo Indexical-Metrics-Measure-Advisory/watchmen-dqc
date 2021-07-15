@@ -32,8 +32,9 @@ def __try_convert_pandas_type(df_series, pandas_type):
     try:
         df_series.astype(pandas_type)
         flag = True
-    except:
+    except :
         flag = False
+        print("convert_df_dtype error {}".format(pandas_type))
     finally:
         return flag
 

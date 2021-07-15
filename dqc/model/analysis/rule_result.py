@@ -1,3 +1,5 @@
+from typing import List
+
 from pydantic import BaseModel
 
 
@@ -10,3 +12,9 @@ class RuleResult(BaseModel):
     result: bool = None
     severity:str= None
     params:dict = {}
+
+
+class RuleExecuteResult(BaseModel):
+    ruleType :str = None
+    topicResult:RuleResult = None
+    factorResult:List[RuleResult] =[]

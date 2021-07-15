@@ -10,9 +10,9 @@ from dqc.service.query.index import query_topic_data_count_by_datetime
 
 def init():
     def rows_count_mismatch_and_another(df: DataFrame, topic, rule: MonitorRule):
-        topic_rule_result = init_topic_rule_result(rule, topic)
+        execute_result = init_topic_rule_result(rule, topic)
         if table_not_exist(df) or data_is_empty(df):
-            return TOPIC_RULE, None
+            return  None
 
         start_date ,end_date = get_date_range(rule.params.statisticalInterval)
         topic_id = rule.params.topicId
@@ -20,10 +20,10 @@ def init():
         current_count = len(df.index)
         prior_count = query_topic_data_count_by_datetime(another_topic, start_date, end_date)
         if current_count != prior_count:
-            topic_rule_result.result = True
+            execute_result.topicResult.result = True
         else:
-            topic_rule_result.result = False
+            execute_result.topicResult.result = False
 
-        return TOPIC_RULE, topic_rule_result
+        return  execute_result
 
     return rows_count_mismatch_and_another

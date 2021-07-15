@@ -5,6 +5,7 @@ from pandas import DataFrame
 
 from dqc.common.constants import FACTOR_RULE
 from dqc.model.analysis.monitor_rule import MonitorRule
+from dqc.model.analysis.rule_result import RuleExecuteResult
 from dqc.rule.utils.topic_utils import table_not_exist, data_is_empty, get_execute_factor_list, \
     init_factor_rule_result
 
@@ -56,15 +57,19 @@ def init():
 
     def factor_common_value_over_coverage(df: DataFrame, topic, rule: MonitorRule):
         if table_not_exist(df) or data_is_empty(df):
-            return FACTOR_RULE, None
+            return  None
         else:
             factor_rule_result_list = []
+            execute_result = RuleExecuteResult()
+            execute_result.ruleType = FACTOR_RULE
             factor_filtered = get_execute_factor_list(rule, topic)
             for factor in factor_filtered:
                 factor_rule_result = init_factor_rule_result(rule, topic, factor)
                 value = df[factor["name"].lower()]
                 factor_rule_result.result = common_value_over_coverage(value, rule, factor)
                 factor_rule_result_list.append(factor_rule_result)
-            return FACTOR_RULE, factor_rule_result_list
+
+            execute_result.factorResult=factor_rule_result_list
+            return execute_result
 
     return factor_common_value_over_coverage

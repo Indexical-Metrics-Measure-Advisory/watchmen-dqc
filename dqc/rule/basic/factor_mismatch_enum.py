@@ -2,7 +2,7 @@ from pandas import DataFrame
 
 from dqc.common.constants import TOPIC_RULE, FACTOR_RULE
 from dqc.model.analysis.monitor_rule import MonitorRule
-from dqc.model.analysis.rule_result import TopicRuleResult
+
 
 
 ## TODO
@@ -24,5 +24,5 @@ def init():
         # else:
         #     topic_rule_result.result = False
 
-        return FACTOR_RULE, {}
+        return None
     return factor_mismatch_enum

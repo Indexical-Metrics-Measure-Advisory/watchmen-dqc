@@ -7,8 +7,12 @@ from dqc.rule.utils.factor_utils import find_factor_by_name, __convert_pandas_ty
 def query_topic_data_by_datetime(topic_name, from_datetime, to_datetime, topic=None):
     ## count data
 
+
     ##TODO between datetime
-    topic_sql = "select * from {0} ".format(topic_name)
+    topic_sql = "select * from {0} where update_time_ between timestamp '{1}' and  timestamp '{2}'".format(
+        __build_topic_name(topic_name), from_datetime.format('YYYY-MM-DD'), to_datetime.format('YYYY-MM-DD'))
+
+    print(topic_sql)
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(topic_sql)
@@ -18,6 +22,8 @@ def query_topic_data_by_datetime(topic_name, from_datetime, to_datetime, topic=N
     df = pd.DataFrame(rows, columns=columns)
 
     # print(.dtypes)
+
+    print(df)
 
     return convert_df_dtype(df, topic)
 
@@ -34,7 +40,7 @@ def convert_df_dtype(df, topic):
 
 
 def __build_topic_name(topic_name):
-    return "topic_"+topic_name
+    return "topic_" + topic_name
 
 
 def query_topic_data_count_by_datetime(topic, from_datetime, to_datetime):
@@ -44,4 +50,3 @@ def query_topic_data_count_by_datetime(topic, from_datetime, to_datetime):
     cur.execute(topic_sql)
     row = cur.fetchone()
     return row[0]
-

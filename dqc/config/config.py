@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     ALGORITHM = "HS256"
 
 
+    WATCHMEN_NAME:str = "local"
+
+
 
 
     # @validator("BACKEND_CORS_ORIGINS", pre=True)
