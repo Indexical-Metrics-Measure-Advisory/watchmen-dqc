@@ -32,7 +32,7 @@ def __try_convert_pandas_type(df_series, pandas_type):
     try:
         df_series.astype(pandas_type)
         flag = True
-    except :
+    except:
         flag = False
         print("convert_df_dtype error {}".format(pandas_type))
     finally:
@@ -83,9 +83,9 @@ def check_max_in_range(df_series, rule, factor=None):
     return check_value_in_range(df_max, rule)
 
 
-def check_common_value_in_range(df_series,rule,factor=None):
+def check_common_value_in_range(df_series, rule, factor=None):
     common_value = df_series.mode().loc[0]
-    return check_value_in_range(common_value,rule)
+    return check_value_in_range(common_value, rule)
 
 
 def check_min_in_range(df_series, rule, factor=None):
@@ -95,22 +95,22 @@ def check_min_in_range(df_series, rule, factor=None):
 
 def check_median_in_range(df_series, rule):
     df_med = df_series.median()
-    return check_value_in_range(df_med,rule)
+    return check_value_in_range(df_med, rule)
 
 
-def check_avg_in_range(df_series,rule):
+def check_avg_in_range(df_series, rule):
     df_avg = df_series.avg()
-    return check_value_in_range(df_avg,rule)
+    return check_value_in_range(df_avg, rule)
 
 
-def check_std_in_range(df_series,rule):
+def check_std_in_range(df_series, rule):
     df_std = df_series.std()
     return check_value_in_range(df_std, rule)
 
 
-def check_quantile_in_range(df_series,rule):
+def check_quantile_in_range(df_series, rule):
     df_quantile = df_series.quantile()
-    return check_value_in_range(df_quantile,rule)
+    return check_value_in_range(df_quantile, rule)
 
 
 def check_value_in_range(value, rule):

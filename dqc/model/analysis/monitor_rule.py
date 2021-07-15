@@ -22,5 +22,5 @@ class MonitorRule(BaseModel):
     severity: str = None
     enabled: bool = False
     topicId: str = None
-    factorId:str = None
+    factorId: str = None
     params: MonitorRuleParameters = None

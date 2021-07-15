@@ -21,8 +21,8 @@ def init_topic_rule_result(rule, topic):
     if rule:
         topic_rule_result.ruleCode = rule.code or ""
         topic_rule_result.severity = rule.severity or ""
-    execute_result.ruleType=TOPIC_RULE
-    execute_result.topicResult= topic_rule_result
+    execute_result.ruleType = TOPIC_RULE
+    execute_result.topicResult = topic_rule_result
     return execute_result
 
 
@@ -50,7 +50,7 @@ def check_factor_value(df, topic, rule, check_function):
         for factor in factor_filtered:
             factor_rule_result = init_factor_rule_result(rule, topic, factor)
             value = df[factor["name"].lower()]
-            factor_rule_result.result = not check_function(value,rule,factor)
+            factor_rule_result.result = not check_function(value, rule, factor)
             factor_rule_result_list.append(factor_rule_result)
         execute_result.factorResult = factor_rule_result_list
         return execute_result

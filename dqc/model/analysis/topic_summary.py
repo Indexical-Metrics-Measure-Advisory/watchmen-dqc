@@ -1,6 +1,5 @@
 from datetime import datetime
 
-
 from dqc.model.catalog.topic_knn_result import TopicKnnResult
 from dqc.model.summary_model import SummaryModel
 

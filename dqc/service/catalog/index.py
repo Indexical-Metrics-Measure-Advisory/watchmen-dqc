@@ -1,10 +1,10 @@
 import arrow
 
 from dqc.integration.admin_sdk import fetch_all_topics, fetch_all_pipelines
+from dqc.model.analysis.topic_summary import TopicSummary
 from dqc.model.catalog.data_source import DataSource
 from dqc.model.catalog.factor import Factor
 from dqc.model.catalog.topic import Topic
-from dqc.model.analysis.topic_summary import TopicSummary
 from dqc.service.graph.index import GraphBuilder
 
 

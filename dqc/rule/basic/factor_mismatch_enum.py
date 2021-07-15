@@ -1,19 +1,12 @@
 from pandas import DataFrame
 
-from dqc.common.constants import TOPIC_RULE, FACTOR_RULE
 from dqc.model.analysis.monitor_rule import MonitorRule
-
 
 
 ## TODO
 
 def init():
-    def factor_mismatch_enum(df: DataFrame, topic,rule:MonitorRule):
-
-
-
-
-
+    def factor_mismatch_enum(df: DataFrame, topic, rule: MonitorRule):
         # topic_rule_result = TopicRuleResult()
         # topic_rule_result.topicId = topic["topicId"]
         # topic_rule_result.topicName = topic["name"]
@@ -25,4 +18,5 @@ def init():
         #     topic_rule_result.result = False
 
         return None
+
     return factor_mismatch_enum

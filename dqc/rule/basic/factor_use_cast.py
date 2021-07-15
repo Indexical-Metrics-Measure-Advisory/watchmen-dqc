@@ -20,7 +20,7 @@ def init():
 
     def factor_use_cast(df: DataFrame, topic, rule: MonitorRule):
         if table_not_exist(df) or data_is_empty(df):
-            return  None
+            return None
         else:
             factor_rule_result_list = []
             execute_result = RuleExecuteResult()
@@ -32,6 +32,6 @@ def init():
                 factor_rule_result.result = check_use_cast(value, rule, factor)
                 factor_rule_result_list.append(factor_rule_result)
             execute_result.factorResult = factor_rule_result_list
-            return  execute_result
+            return execute_result
 
     return factor_use_cast

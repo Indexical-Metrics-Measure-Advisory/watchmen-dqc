@@ -12,8 +12,6 @@ def health_check_topic_by_basic_expectation(topic_name, from_date, to_date):
     # print(df_ge)
     reuslt = df_ge.expect_table_row_count_to_equal(4612)
 
-
-
     print(df_ge.validate())
 
     ## load data

@@ -17,14 +17,12 @@ def load_topic_list(site, names):
 def load_all_topic_list(site):
     headers = build_headers(login(site))
     response = requests.get(site["host"] + "topic/all",
-                             headers=headers)
+                            headers=headers)
     return response.json()
 
 
-def get_topic_by_id(site,topic_id):
+def get_topic_by_id(site, topic_id):
     headers = build_headers(login(site))
     response = requests.get(site["host"] + "topic", params={"topic_id": topic_id},
-                             headers=headers)
+                            headers=headers)
     return response.json()
-
-

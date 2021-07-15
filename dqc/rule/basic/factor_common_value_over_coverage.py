@@ -57,7 +57,7 @@ def init():
 
     def factor_common_value_over_coverage(df: DataFrame, topic, rule: MonitorRule):
         if table_not_exist(df) or data_is_empty(df):
-            return  None
+            return None
         else:
             factor_rule_result_list = []
             execute_result = RuleExecuteResult()
@@ -69,7 +69,7 @@ def init():
                 factor_rule_result.result = common_value_over_coverage(value, rule, factor)
                 factor_rule_result_list.append(factor_rule_result)
 
-            execute_result.factorResult=factor_rule_result_list
+            execute_result.factorResult = factor_rule_result_list
             return execute_result
 
     return factor_common_value_over_coverage

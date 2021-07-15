@@ -1,4 +1,3 @@
-import json
 from typing import Any
 
 import requests
@@ -9,8 +8,9 @@ from dqc.sdk.utils.index import build_headers
 
 
 class InstanceRequest(BaseModel):
-    code:str =None
-    data:Any= None
+    code: str = None
+    data: Any = None
+
 
 def import_instance(instance, site):
     headers = build_headers(login(site))

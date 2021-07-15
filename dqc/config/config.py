@@ -18,11 +18,7 @@ class Settings(BaseSettings):
 
     ALGORITHM = "HS256"
 
-
-    WATCHMEN_NAME:str = "local"
-
-
-
+    WATCHMEN_NAME: str = "local"
 
     # @validator("BACKEND_CORS_ORIGINS", pre=True)
     # def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
@@ -31,8 +27,8 @@ class Settings(BaseSettings):
     #     elif isinstance(v, (list, str)):
     #         return v
     #     raise ValueError(v)
-    STORAGE_ENGINE:str = "mongo"
-    PROJECT_NAME: str ="local-test"
+    STORAGE_ENGINE: str = "mongo"
+    PROJECT_NAME: str = "local-test"
     MONGO_HOST: str = "localhost"
     MONGO_PORT: int = 27017
     PRESTO_HTTP_URL = "http://localhost:8080"

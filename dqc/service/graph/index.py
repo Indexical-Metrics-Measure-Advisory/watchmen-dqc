@@ -37,20 +37,18 @@ class GraphBuilder(object):
                 name=topic["name"],
                 nodeType=TOPIC,
                 nodeRefId=topic["topicId"],
-                topicType = topic["type"],
-                topicKind = topic["kind"]
+                topicType=topic["type"],
+                topicKind=topic["kind"]
             )
 
             node_list.append(topic_node)
             for factor in topic["factors"]:
-
-
                 factor_node = GraphNode(
                     nodeId=get_next_id(),
                     name=factor["name"],
                     nodeType=FACTOR,
                     nodeRefId=factor["factorId"],
-                    factorType = factor["type"]
+                    factorType=factor["type"]
                 )
                 node_list.append(factor_node)
                 relationship = Relationship(
