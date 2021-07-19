@@ -1,9 +1,7 @@
-from storage.storage.storage_template import find_, insert_one, update_, find_one, list_all
-
+from dqc.common.constants import MONITOR_RULES
 from dqc.common.simpleflake import get_next_id
+from dqc.database.storage.storage_template import find_, list_all, find_one, insert_one, update_
 from dqc.model.analysis.monitor_rule import MonitorRule
-
-MONITOR_RULES = "monitor_rules"
 
 
 def load_global_rule_list():
@@ -11,7 +9,7 @@ def load_global_rule_list():
 
 
 def load_topic_rule_list_by_topic_id(topic_id):
-    results = find_({"topicId": topic_id}, MonitorRule, MONITOR_RULES)
+    results = find_({"topicid": topic_id}, MonitorRule, MONITOR_RULES)
     return results
 
 
@@ -21,11 +19,11 @@ def load_monitor_rule_all():
 
 def load_monitor_rule(monitor_rule):
     if monitor_rule.factorId is None:
-        return find_one({"and": [{"topicId": monitor_rule.topicId}, {"code": monitor_rule.code}]},
+        return find_one({"and": [{"topicid": monitor_rule.topicId}, {"code": monitor_rule.code}]},
                         MonitorRule, MONITOR_RULES)
     else:
-        return find_one({"and": [{"topicId": monitor_rule.topicId}, {"code": monitor_rule.code},
-                                 {"factorId": monitor_rule.factorId}]},
+        return find_one({"and": [{"topicid": monitor_rule.topicId}, {"code": monitor_rule.code},
+                                 {"factorid": monitor_rule.factorId}]},
                         MonitorRule, MONITOR_RULES)
 
 
@@ -36,11 +34,11 @@ def create_monitor_rule(monitor_rule: MonitorRule):
 
 def update_monitor_rule(monitor_rule: MonitorRule):
     if monitor_rule.factorId is None:
-        print("topic ")
-        return update_({"and": [{"topicId": monitor_rule.topicId}, {"code": monitor_rule.code}]}, monitor_rule,
+        # print("topic ")
+        return update_({"and": [{"topicid": monitor_rule.topicId}, {"code": monitor_rule.code}]}, monitor_rule,
                        MonitorRule, MONITOR_RULES)
     else:
-        print("factor ")
-        return update_({"and": [{"topicId": monitor_rule.topicId}, {"code": monitor_rule.code},
-                                {"factorId": monitor_rule.factorId}]}, monitor_rule,
+        # print("factor ")
+        return update_({"and": [{"topicid": monitor_rule.topicId}, {"code": monitor_rule.code},
+                                {"factorid": monitor_rule.factorId}]}, monitor_rule,
                        MonitorRule, MONITOR_RULES)

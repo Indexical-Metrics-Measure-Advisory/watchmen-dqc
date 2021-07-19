@@ -38,6 +38,39 @@ class Settings(BaseSettings):
     PRESTO_CATALOG = "mysql"
     PRESTO_SCHEMA = "watchmen"
 
+    MONGO_HOST: str = None
+    MONGO_PORT: int = None
+    MONGO_DATABASE: str = "watchmen"
+    MONGO_USERNAME: str = None
+    MONGO_PASSWORD: str = None
+    # PRESTO_HTTP_URL = "http://localhost:8080"
+    PRESTO_HOST: str = None
+    PRESTO_PORT: int = None
+    PRESTO_USER = "the_user"
+    PRESTO_CATALOG = "mongo"
+    PRESTO_SCHEMA = "watchmen"
+    PRESTO_ON = True
+
+
+
+    MYSQL_HOST: str = ""
+    MYSQL_PORT: int = 3306
+    MYSQL_USER: str = ""
+    MYSQL_PASSWORD: str = ""
+    MYSQL_DATABASE: str = "watchmen"
+    MYSQL_POOL_MAXCONNECTIONS: int = 6
+    MYSQL_POOL_MINCACHED = 2
+    MYSQL_POOL_MAXCACHED = 5
+    MYSQL_ECHO = False
+
+    ORACLE_LIB_DIR: str = ""
+    ORACLE_HOST: str = ""
+    ORACLE_PORT: int = 1521
+    ORACLE_USER: str = ""
+    ORACLE_PASSWORD: str = ""
+    ORACLE_SERVICE: str = ""
+    ORACLE_SID: str = ""
+
     MONGO_MONITOR_HOST: str = ""
     MONGO_MONITOR_PORT: int = 0
 

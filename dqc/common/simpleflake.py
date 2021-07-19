@@ -69,3 +69,7 @@ def parse_simpleflake(flake):
 
 def get_next_id():
     return str(simpleflake())
+
+
+def get_surrogate_key():
+    return get_next_id()

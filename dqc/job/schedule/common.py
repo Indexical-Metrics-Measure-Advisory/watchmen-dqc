@@ -5,7 +5,7 @@ import traceback
 from trino.exceptions import TrinoUserError
 
 from dqc.common.constants import TOPIC_RULE, FACTOR_RULE
-from dqc.common.utils.date_utils import get_date_range
+from dqc.common.utils.data_utils import get_date_range
 from dqc.model.analysis.rule_result import RuleExecuteResult
 from dqc.sdk.admin.admin_sdk import load_all_topic_list
 from dqc.sdk.common.common_sdk import import_instance, InstanceRequest

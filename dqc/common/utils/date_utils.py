@@ -1,23 +1,12 @@
-import arrow
+import decimal
+import json
+from datetime import datetime, date
 
 
-def get_date_range(statistical_interval: str):
-    end_date = arrow.now()
-    return get_date_range_with_end_date(statistical_interval, end_date)
-
-
-def get_date_range_with_end_date(statistical_interval, end_date):
-    # TODO
-    # end_date = end_date.shift(days=1)
-    if statistical_interval == "daily":
-        start = end_date.shift(days=-1)
-        return start, end_date
-    elif statistical_interval == "monthly":
-        start = end_date.shift(months=-1)
-        return start, end_date
-    elif statistical_interval == "weekly":
-        start = end_date.shift(weeks=-1)
-        return start, end_date
-
-def build_topic_name(topic_name):
-    return "topic_" + topic_name
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, (datetime, date)):
+            return o.isoformat()
+        if isinstance(o, decimal.Decimal):
+            return float(o)
+        return super().default(o)

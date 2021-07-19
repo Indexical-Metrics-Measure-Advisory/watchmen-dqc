@@ -3,7 +3,7 @@ from typing import List
 
 import arrow
 
-from dqc.common.utils.date_utils import build_topic_name
+from dqc.common.utils.data_utils import build_collection_name
 from dqc.config.config import settings
 from dqc.job.schedule.daily_job import load_topic_list_without_raw_topic, execute_topic_rule
 from dqc.model.analysis.monitor_rule import MonitorRule
@@ -34,6 +34,6 @@ def execute_topic_rules(execute_topic_list,site_info):
         enabled_rules = __find_execute_rule(rule_list)
 
         if enabled_rules:
-            topic_name = build_topic_name(execute_topic["name"])
+            topic_name = build_collection_name(execute_topic["name"])
             log.info("check topic {}".format(topic_name))
             execute_topic_rule(enabled_rules, execute_topic, site_info,"monthly")
