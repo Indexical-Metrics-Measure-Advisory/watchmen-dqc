@@ -43,14 +43,6 @@ class Settings(BaseSettings):
     MONGO_DATABASE: str = "watchmen"
     MONGO_USERNAME: str = None
     MONGO_PASSWORD: str = None
-    # PRESTO_HTTP_URL = "http://localhost:8080"
-    PRESTO_HOST: str = None
-    PRESTO_PORT: int = None
-    PRESTO_USER = "the_user"
-    PRESTO_CATALOG = "mongo"
-    PRESTO_SCHEMA = "watchmen"
-    PRESTO_ON = True
-
 
 
     MYSQL_HOST: str = ""
