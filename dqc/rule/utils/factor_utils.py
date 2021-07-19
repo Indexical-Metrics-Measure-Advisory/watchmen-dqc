@@ -9,6 +9,7 @@ from dqc.model.analysis.monitor_rule import MonitorRule
 log = logging.getLogger("app." + __name__)
 
 
+
 def __check_date_time(cell):
     try:
         if isinstance(cell, str):
@@ -56,9 +57,9 @@ def find_factor_by_name(factor_list, factor_name):
 
 
 def __convert_pandas_type(factor_type):
-    if factor_type in ["number", "unsigned"]:
+    if factor_type in ["number", "unsigned","sequence"]:
         return "float64"
-    elif factor_type in ["sequence", "year", "half-year", "quarter", "month", "half-month", "ten-days", "week-of-year",
+    elif factor_type in [ "year", "half-year", "quarter", "month", "half-month", "ten-days", "week-of-year",
                          "week-of-month", "half-week", "day-of-month", "day-of-week", "day-kind", "hour", "hour-kind",
                          "minute", "second", "millisecond", "am-pm"]:
         return "int64"
@@ -77,52 +78,73 @@ def check_date_type(df_series, factor_type):
 def check_is_empty(df_series, rule=None, factor=None):
     return df_series.empty
 
+# def check_is_blank(df_series, rule=None, factor=None):
+#     return df_series
 
-def check_max_in_range(df_series, rule, factor=None):
+
+def check_max_not_in_range(df_series, rule, factor=None):
     df_max = df_series.max()
-    return check_value_in_range(df_max, rule)
+    return check_value_not_in_range(df_max, rule)
 
 
-def check_common_value_in_range(df_series, rule, factor=None):
+def check_common_value_not_in_range(df_series, rule, factor=None):
     common_value = df_series.mode().loc[0]
-    return check_value_in_range(common_value, rule)
+    return check_value_not_in_range(common_value, rule)
 
 
-def check_min_in_range(df_series, rule, factor=None):
+def check_min_not_in_range(df_series, rule, factor=None):
     df_min = df_series.min()
-    return check_value_in_range(df_min, rule)
+    return check_value_not_in_range(df_min, rule)
 
 
-def check_median_in_range(df_series, rule):
+def check_median_not_in_range(df_series, rule,factor=None):
     df_med = df_series.median()
-    return check_value_in_range(df_med, rule)
+    return check_value_not_in_range(df_med, rule)
 
 
-def check_avg_in_range(df_series, rule):
-    df_avg = df_series.avg()
-    return check_value_in_range(df_avg, rule)
+def check_avg_not_in_range(df_series, rule,factor=None):
+    df_mean = df_series.mean()
+    return check_value_not_in_range(df_mean, rule)
 
 
-def check_std_in_range(df_series, rule):
+def check_std_not_in_range(df_series, rule,factor=None):
     df_std = df_series.std()
-    return check_value_in_range(df_std, rule)
+    return check_value_not_in_range(df_std, rule,factor=None)
 
 
-def check_quantile_in_range(df_series, rule):
+def check_str_length_mismatch(df_series,rule,factor=None):
+    df_len_str = df_series.str.len()
+    if rule.params.length is None:
+        raise  ValueError("length is empty")
+    length = rule.params.length
+    return df_len_str != length
+
+
+def check_str_length_not_in_range(df_series,rule,factor=None):
+    df_len_str = df_series.str.len()
+    return check_df_value_not_in_range(df_len_str,rule)
+
+
+def check_quantile_not_in_range(df_series, rule,factor=None):
     df_quantile = df_series.quantile()
-    return check_value_in_range(df_quantile, rule)
+    return  check_value_not_in_range(df_quantile, rule)
 
 
-def check_value_in_range(value, rule):
+def check_value_not_in_range(value, rule,factor=None):
+    if rule.params.min is None or rule.params.max is None:
+        raise ValueError("min {0} or max {1} is None".format(rule.params.min,rule.params.max))
+
     range_min = int(rule.params.min)
     range_max = int(rule.params.max)
-    return range_min < value < range_max
+    result = range_min < value < range_max
+    return not result
 
 
-def check_value_range(df_series, rule: MonitorRule = None, factor=None):
+def check_df_value_not_in_range(df_series, rule: MonitorRule = None, factor=None):
     range_min = int(rule.params.min)
     range_max = int(rule.params.max)
-    return df_series.between(range_min, range_max).all()
+    # print(df_series.max())
+    return not df_series.between(range_min, range_max).all()
 
 
 def check_value_match_type(df_series, factor_type):

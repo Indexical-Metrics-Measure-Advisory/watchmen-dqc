@@ -9,13 +9,13 @@ from dqc.rule.utils.topic_utils import table_not_exist, data_is_empty, get_execu
 
 def init():
     def check_empty_coverage(df_series, rule=None, factor=None):
-
         null_count = df_series.isnull().sum()
         count = df_series.count()
         coverage_rate = rule.params.coverageRate
         if coverage_rate is None:
             raise ValueError("coverage rate is None")
-        return null_count / count <= coverage_rate / 100
+        else:
+            return null_count / count <= coverage_rate / 100
 
     def factor_empty_over_coverage(df: DataFrame, topic, rule: MonitorRule):
         if table_not_exist(df) or data_is_empty(df):

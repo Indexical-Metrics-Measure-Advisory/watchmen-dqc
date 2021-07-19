@@ -16,7 +16,11 @@ def init():
         count_common_value = df_series.value_counts()[common_value]
         df_sum = df_series.sum()
         aggregation = rule.params.aggregation
+        if aggregation is None:
+            raise ValueError("aggregation is null")
         coverage_rate = rule.params.coverageRate
+        if coverage_rate is None:
+            raise ValueError("aggregation is null")
         df_count = df_series.count()
         aggregation_limit = df_count * aggregation / 100
         df_count_list = df_series.value_counts()
@@ -36,11 +40,11 @@ def init():
 
         # data_list  = count_list.dropna()
 
-        count = df_series.count()
-        coverage_rate = rule.params.coverageRate
-        aggregation = rule.params.aggregation
-        if coverage_rate is not None and aggregation is None:
-            return count_common_value / count <= coverage_rate / 100
+        # count = df_series.count()
+        # coverage_rate = rule.params.coverageRate
+        # aggregation = rule.params.aggregation
+        # if coverage_rate is not None and aggregation is None:
+        #     return count_common_value / count <= coverage_rate / 100
         # elif coverage_rate is None and aggregation is not None:
         #     return
 

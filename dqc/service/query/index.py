@@ -38,7 +38,10 @@ def __build_topic_name(topic_name):
 
 
 def query_topic_data_count_by_datetime(topic, from_datetime, to_datetime):
-    topic_sql = "select count(*) from {0} ".format(__build_topic_name(topic["name"]))
+    # topic_sql = "select count(*) from {0} ".format(__build_topic_name(topic["name"]))
+    topic_sql = "select count(*) from {0} where update_time_ between timestamp '{1}' and  timestamp '{2}'".format(
+        __build_topic_name(topic["name"]), from_datetime.format('YYYY-MM-DD'), to_datetime.format('YYYY-MM-DD'))
+
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(topic_sql)

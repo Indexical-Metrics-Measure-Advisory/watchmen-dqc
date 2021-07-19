@@ -1,5 +1,6 @@
 import importlib
 import logging
+import traceback
 from typing import List
 
 import arrow
@@ -12,7 +13,7 @@ from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.model.analysis.rule_result import RuleExecuteResult
 from dqc.sdk.admin.admin_sdk import load_all_topic_list
 from dqc.sdk.common.common_sdk import import_instance, InstanceRequest
-from dqc.service.analysis.analysis_service import load_global_rule_list
+from dqc.service.analysis.analysis_service import load_global_rule_list, load_topic_rule_list_by_topic_id
 from dqc.service.common.site_service import load_site_json
 from dqc.service.query.index import query_topic_data_by_datetime
 
@@ -65,11 +66,13 @@ def trigger_rule(topicResult):
 def __save_rule_result(rule_result_summary: RuleExecuteResult, site_info):
     if rule_result_summary and rule_result_summary.ruleType == TOPIC_RULE:
         if trigger_rule(rule_result_summary.topicResult):
+            rule_result_summary.topicResult.result = bool(rule_result_summary.topicResult.result)
             import_instance(InstanceRequest(code="system_rule_result", data=rule_result_summary.topicResult), site_info)
     elif rule_result_summary and rule_result_summary.ruleType == FACTOR_RULE:
         factor_results = rule_result_summary.factorResult
         for factor_result in factor_results:
             if trigger_rule(factor_result):
+                factor_result.result = bool(factor_result.result)
                 import_instance(InstanceRequest(code="system_rule_result", data=factor_result), site_info)
 
 
@@ -83,19 +86,23 @@ def execute_topic_rule(enabled_rules, execute_topic, site_info):
         for enabled_rule in enabled_rules:
 
             log.info("run rule {}".format(enabled_rule.code))
+
             rule_func = find_rule_func(enabled_rule.code)
             if rule_func is not None:
                 try:
                     rule_result = rule_func(data_frame, execute_topic, enabled_rule)
+                    print(rule_result)
                     __save_rule_result(rule_result, site_info)
                 except Exception as e:
                     log.error(e)
-                    log.error("func execute error: {}".format(enabled_rule.code))
+
+                    log.error(traceback.format_exc())
             else:
                 log.warning("rule not exists {}".format(enabled_rule.code))
 
     except Exception as e:
         log.error(e)
+        log.error(traceback.format_exc())
 
 
 def __run_execute_rule(execute_topic_list, enabled_rules, site_info):
@@ -109,9 +116,39 @@ def run():
     log.info("start global rule job at {}".format(arrow.now()))
     site: dict = load_site_json()
     execute_topic_list = load_topic_list_without_raw_topic(site[settings.WATCHMEN_NAME])
-    execute_global_rule(execute_topic_list, site[settings.WATCHMEN_NAME])
+    # execute_global_rule(execute_topic_list, site[settings.WATCHMEN_NAME])
+    execute_topic_rules(execute_topic_list, site[settings.WATCHMEN_NAME])
+
 
     log.info("end global rule job at {}".format(arrow.now()))
+
+
+
+def execute_topic_rules(execute_topic_list,site_info):
+    for execute_topic in execute_topic_list:
+        rule_list = load_topic_rule_list_by_topic_id(execute_topic["topicId"])
+        enabled_rules = __find_execute_rule(rule_list)
+
+        # print(enabled_rules)
+        if enabled_rules:
+            print(enabled_rules)
+            topic_name = __build_topic_name(execute_topic["name"])
+            log.info("check topic {}".format(topic_name))
+            execute_topic_rule(enabled_rules, execute_topic, site_info)
+
+
+def __find_execute_rule(rule_list:List[MonitorRule]):
+    execute_rules = []
+    for rule in rule_list:
+        if rule.enabled :
+            if rule.params is None :
+                execute_rules.append(rule)
+            elif rule.params is not None and rule.params.statisticalInterval is None:
+                execute_rules.append(rule)
+            elif rule.params is not None and rule.params.statisticalInterval =="daily":
+                execute_rules.append(rule)
+
+    return execute_rules
 
 
 def execute_global_rule(execute_topic_list, site_info):

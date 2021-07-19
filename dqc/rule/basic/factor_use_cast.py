@@ -16,7 +16,7 @@ def init():
             return None
 
     def df_series_is_str(df_series):
-        return df_series.applymap(type).eq(str).all()
+        return df_series.apply(type).eq(str).all()
 
     def factor_use_cast(df: DataFrame, topic, rule: MonitorRule):
         if table_not_exist(df) or data_is_empty(df):

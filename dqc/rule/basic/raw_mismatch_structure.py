@@ -5,7 +5,7 @@ from pandas import DataFrame
 log = logging.getLogger("app." + __name__)
 
 
-##TODO
+##TODO raw_mismatch_structure
 
 def init():
     def raw_mismatch_structure(df: DataFrame, topic, rule=None):
