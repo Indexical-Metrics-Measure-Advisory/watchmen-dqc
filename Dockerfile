@@ -14,6 +14,7 @@ WORKDIR /app
 ADD . .
 RUN pip install cx_Oracle
 RUN pip install cacheout
+RUN pip install fastapi
 # RUN pip install scikit-learn
 # RUN pip install great-expectations
 # RUN pip install pandas
@@ -26,9 +27,6 @@ RUN pip install cacheout
 # RUN pip install plotly
 # RUN pip install APScheduler
 # RUN pip install arrow
-
-
-
 
 
 RUN pip install poetry

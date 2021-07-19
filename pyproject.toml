@@ -7,7 +7,6 @@ authors = ["luke0623 <luke0623@outlook.com>"]
 [tool.poetry.dependencies]
 python = "^3.9.2"
 pandas = "^1.2.1"
-fastapi = "^0.63.0"
 python-dotenv = "^0.15.0"
 trino = "^0.305.0"
 uvicorn = "^0.13.4"
