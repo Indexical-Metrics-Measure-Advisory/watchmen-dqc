@@ -18,3 +18,6 @@ def get_date_range_with_end_date(statistical_interval, end_date):
     elif statistical_interval == "weekly":
         start = end_date.shift(weeks=-1)
         return start, end_date
+
+def build_topic_name(topic_name):
+    return "topic_" + topic_name

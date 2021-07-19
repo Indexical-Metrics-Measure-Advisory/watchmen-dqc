@@ -32,19 +32,10 @@ def group_by_statistical_interval(rules: List[MonitorRule]):
 
 
 def init_jobs():
-    # load all rule in system
 
     rules = load_monitor_rule_all()
 
     group_by_statistical_interval_results = group_by_statistical_interval(rules)
-
-    # print(group_by_statistical_interval_results)
-
-    # run global_rule
-
-    # group by factor and topic
-
-    # run factor and topic rule
 
     if settings.JOB_FLAG:
         scheduler = AsyncIOScheduler()
