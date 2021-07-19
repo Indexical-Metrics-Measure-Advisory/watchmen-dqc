@@ -112,6 +112,20 @@ def check_std_not_in_range(df_series, rule,factor=None):
     return check_value_not_in_range(df_std, rule,factor=None)
 
 
+def check_mismatch_regex(df_series, rule:MonitorRule, factor):
+    regexp = rule.params.regexp
+    if regexp is None:
+        raise ValueError("regexp is empty")
+
+    return not df_series.str.match(regexp)
+
+
+def check_match_regex(df_series, rule:MonitorRule, factor):
+    regexp = rule.params.regexp
+    if regexp is None:
+        raise ValueError("regexp is empty")
+    return df_series.str.match(regexp)
+
 def check_str_length_mismatch(df_series,rule,factor=None):
     df_len_str = df_series.str.len()
     if rule.params.length is None:
