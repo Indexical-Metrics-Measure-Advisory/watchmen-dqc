@@ -18,31 +18,21 @@ class Settings(BaseSettings):
 
     ALGORITHM = "HS256"
 
-    WATCHMEN_NAME: str = "local"
 
-    # @validator("BACKEND_CORS_ORIGINS", pre=True)
-    # def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
-    #     if isinstance(v, str) and not v.startswith("["):
-    #         return [i.strip() for i in v.split(",")]
-    #     elif isinstance(v, (list, str)):
-    #         return v
-    #     raise ValueError(v)
     STORAGE_ENGINE: str = "mongo"
     PROJECT_NAME: str = "local-test"
     MONGO_HOST: str = "localhost"
     MONGO_PORT: int = 27017
-    PRESTO_HTTP_URL = "http://localhost:8080"
+    MONGO_DATABASE: str = "watchmen"
+    MONGO_USERNAME: str = None
+    MONGO_PASSWORD: str = None
+
+
     PRESTO_HOST = "localhost"
     PRESTO_PORT = 8088
     PRESTO_USER = "the_user"
     PRESTO_CATALOG = "mysql"
     PRESTO_SCHEMA = "watchmen"
-
-    MONGO_HOST: str = None
-    MONGO_PORT: int = None
-    MONGO_DATABASE: str = "watchmen"
-    MONGO_USERNAME: str = None
-    MONGO_PASSWORD: str = None
 
 
     MYSQL_HOST: str = ""
@@ -63,10 +53,9 @@ class Settings(BaseSettings):
     ORACLE_SERVICE: str = ""
     ORACLE_SID: str = ""
 
-    MONGO_MONITOR_HOST: str = ""
-    MONGO_MONITOR_PORT: int = 0
 
     JOB_FLAG: bool = False
+    WATCHMEN_NAME: str = "local"
 
     class Config:
         env_file = '.env'
