@@ -19,26 +19,29 @@ def load_monitor_rule_all():
 
 def load_monitor_rule(monitor_rule):
     if monitor_rule.factorId is None:
-        return find_one({"and": [{"topicid": monitor_rule.topicId}, {"code": monitor_rule.code}]},
-                        MonitorRule, MONITOR_RULES)
+        return find_one(
+            {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code}]},
+            MonitorRule, MONITOR_RULES)
     else:
-        return find_one({"and": [{"topicid": monitor_rule.topicId}, {"code": monitor_rule.code},
-                                 {"factorid": monitor_rule.factorId}]},
-                        MonitorRule, MONITOR_RULES)
+        return find_one(
+            {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code},
+                     {"factorid": monitor_rule.factorId}]},
+            MonitorRule, MONITOR_RULES)
 
 
 def create_monitor_rule(monitor_rule: MonitorRule):
-    monitor_rule.uid = get_next_id()
+    monitor_rule.ruleId = get_next_id()
     return insert_one(monitor_rule, MonitorRule, MONITOR_RULES)
 
 
 def update_monitor_rule(monitor_rule: MonitorRule):
     if monitor_rule.factorId is None:
-        # print("topic ")
-        return update_({"and": [{"topicid": monitor_rule.topicId}, {"code": monitor_rule.code}]}, monitor_rule,
-                       MonitorRule, MONITOR_RULES)
+        return update_(
+            {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code}]},
+            monitor_rule,
+            MonitorRule, MONITOR_RULES)
     else:
-        # print("factor ")
-        return update_({"and": [{"topicid": monitor_rule.topicId}, {"code": monitor_rule.code},
-                                {"factorid": monitor_rule.factorId}]}, monitor_rule,
-                       MonitorRule, MONITOR_RULES)
+        return update_(
+            {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code},
+                     {"factorid": monitor_rule.factorId}]}, monitor_rule,
+            MonitorRule, MONITOR_RULES)

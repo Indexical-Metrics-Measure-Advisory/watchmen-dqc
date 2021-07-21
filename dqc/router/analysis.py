@@ -3,6 +3,7 @@ from typing import List
 from fastapi import APIRouter
 from pydantic.main import BaseModel
 
+from dqc.common.simpleflake import get_next_id
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.model.analysis.monitor_rule_log import MonitorRuleLog
 from dqc.model.analysis.rule_result_criteria import MonitorRuleLogRequest
@@ -25,6 +26,8 @@ class MonitorRuleRequest(BaseModel):
 @router.post("/dqc/monitor/rules", tags=["admin"], response_model=List[MonitorRule])
 async def save_monitor_rule(rule_list: List[MonitorRule]):
     for monitor_rule in rule_list:
+        if monitor_rule.ruleId is None:
+            monitor_rule.ruleId = get_next_id()
         result = load_monitor_rule(monitor_rule)
         if result is None:
             create_monitor_rule(monitor_rule)

@@ -205,7 +205,7 @@ pats_table = Table("pats", metadata,
 
 
 monitor_rule_table = Table(MONITOR_RULES, metadata,
-                   Column("uid", String(60), primary_key=True),
+                   Column("ruleid", String(60), primary_key=True),
                    Column("code", String(50), nullable=False),
                    Column("grade", String(50), nullable=False),
                    Column("severity", String(50), nullable=False),

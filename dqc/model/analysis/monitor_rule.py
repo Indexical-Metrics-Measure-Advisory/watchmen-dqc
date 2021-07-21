@@ -16,7 +16,7 @@ class MonitorRuleParameters(BaseModel):
 
 
 class MonitorRule(BaseModel):
-    uid: str = None
+    ruleId: str = None
     code: str = None
     grade: str = None
     severity: str = None

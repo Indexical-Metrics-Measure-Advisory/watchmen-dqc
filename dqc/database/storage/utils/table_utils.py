@@ -43,7 +43,7 @@ def get_pid(table_name):
     elif table_name == "pats":
         pid = "patId"
     elif table_name == MONITOR_RULES:
-        pid = "uid"
+        pid = "ruleid"
 
 
     return pid

@@ -20,7 +20,11 @@ class Settings(BaseSettings):
 
 
     STORAGE_ENGINE: str = "mongo"
+
+
     PROJECT_NAME: str = "local-test"
+
+
     MONGO_HOST: str = "localhost"
     MONGO_PORT: int = 27017
     MONGO_DATABASE: str = "watchmen"
