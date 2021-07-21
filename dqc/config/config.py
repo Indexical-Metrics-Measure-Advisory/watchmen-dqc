@@ -60,7 +60,7 @@ class Settings(BaseSettings):
     JOB_FLAG: bool = False
     WATCHMEN_NAME: str = "local"
     WATCHMEN_HOST : str = "http://localhost:8000/"
-    WATCHMEN_TOKEN: str = ""
+    WATCHMEN_PAT: str = "kUWBTfFL_rclOQ0r7_IRDA"
 
     class Config:
         env_file = '.env'

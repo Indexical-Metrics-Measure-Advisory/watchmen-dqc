@@ -16,8 +16,8 @@ log = logging.getLogger("app." + __name__)
 RULE_MODULE_PATH = "dqc.rule.basic."
 
 
-def load_topic_list_without_raw_topic(site_info):
-    topic_list = load_all_topic_list(site_info)
+def load_topic_list_without_raw_topic():
+    topic_list = load_all_topic_list()
     # print(topic_list)
     filtered = filter(lambda topic: topic["type"] != "raw" and topic["kind"] == "business", topic_list)
     return list(filtered)
@@ -53,20 +53,20 @@ def trigger_rule(topic_result):
     return topic_result.result
 
 
-def save_rule_result(rule_result_summary: RuleExecuteResult, site_info):
+def save_rule_result(rule_result_summary: RuleExecuteResult):
     if rule_result_summary and rule_result_summary.ruleType == TOPIC_RULE:
         if trigger_rule(rule_result_summary.topicResult):
             rule_result_summary.topicResult.result = bool(rule_result_summary.topicResult.result)
-            import_instance(InstanceRequest(code="system_rule_result", data=rule_result_summary.topicResult), site_info)
+            import_instance(InstanceRequest(code="system_rule_result", data=rule_result_summary.topicResult))
     elif rule_result_summary and rule_result_summary.ruleType == FACTOR_RULE:
         factor_results = rule_result_summary.factorResult
         for factor_result in factor_results:
             if trigger_rule(factor_result):
                 factor_result.result = bool(factor_result.result)
-                import_instance(InstanceRequest(code="system_rule_result", data=factor_result), site_info)
+                import_instance(InstanceRequest(code="system_rule_result", data=factor_result))
 
 
-def execute_topic_rule(enabled_rules, execute_topic, site_info, interval):
+def execute_topic_rule(enabled_rules, execute_topic, interval):
     try:
         start, end = get_date_range(interval)
         data_frame = get_topic_data(execute_topic, start, end)
@@ -79,7 +79,7 @@ def execute_topic_rule(enabled_rules, execute_topic, site_info, interval):
                 try:
                     rule_result = rule_func(data_frame, execute_topic, enabled_rule)
                     print(rule_result)
-                    save_rule_result(rule_result, site_info)
+                    save_rule_result(rule_result)
                 except Exception as e:
                     log.error(e)
 
