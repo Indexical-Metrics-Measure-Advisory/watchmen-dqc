@@ -57,9 +57,10 @@ class Settings(BaseSettings):
     ORACLE_SERVICE: str = ""
     ORACLE_SID: str = ""
 
-
     JOB_FLAG: bool = False
     WATCHMEN_NAME: str = "local"
+    WATCHMEN_HOST : str = "http://localhost:8000/"
+    WATCHMEN_TOKEN: str = ""
 
     class Config:
         env_file = '.env'
