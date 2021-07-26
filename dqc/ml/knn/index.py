@@ -10,8 +10,8 @@ def __clean_data(df: DataFrame, factor_list=[]):
     str_columns = []
     for column in df.columns:
         column_name = column.replace(" ", "")
-        print(column_name)
-        print(df[column].dtype)
+        # print(column_name)
+        # print(df[column].dtype)
         if df[column].dtype == np.float64 or df[column].dtype == np.int64:
             if column_name.endswith("Id") or column_name.endswith("id") or column_name.endswith("row"):
                 df = df.drop(column, 1)

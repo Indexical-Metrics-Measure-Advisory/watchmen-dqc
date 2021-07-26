@@ -10,7 +10,7 @@ from dqc.sdk.auth.auth_sdk import validate_token
 def get_current_user(request: Request) :
     authorization: str = request.headers.get("Authorization")
 
-    print(authorization)
+
     if not authorization:
         scheme, param = "", ""
     else:
@@ -27,7 +27,7 @@ def get_current_user(request: Request) :
             user = validate_token(token)
             return user
         except :
-            print(traceback.format_exc())
+            # print(traceback.format_exc())
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Not authenticated",

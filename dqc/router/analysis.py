@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 from fastapi import APIRouter, Depends
@@ -22,6 +23,12 @@ class MonitorRulesCriteria(BaseModel):
 
 class MonitorRuleRequest(BaseModel):
     criteria: MonitorRulesCriteria
+
+
+class TopicProfileRequest(BaseModel):
+    topicId: str = None
+    fromDate: datetime = None
+    toDate:datetime = None
 
 
 @router.post("/dqc/monitor/rules", tags=["admin"], response_model=List[MonitorRule])
@@ -51,3 +58,7 @@ async def query_rule_results(req: MonitorRuleLogRequest,current_user = Depends(d
     results = query_rule_results_by_datetime(req.criteria)
     # print (results)
     return results
+
+
+async def generate_topic_profile():
+    pass

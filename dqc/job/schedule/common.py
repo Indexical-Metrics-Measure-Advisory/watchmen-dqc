@@ -78,7 +78,7 @@ def execute_topic_rule(enabled_rules, execute_topic, interval):
             if rule_func is not None:
                 try:
                     rule_result = rule_func(data_frame, execute_topic, enabled_rule)
-                    print(rule_result)
+                    # print(rule_result)
                     save_rule_result(rule_result)
                 except Exception as e:
                     log.error(e)
