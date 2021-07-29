@@ -1,7 +1,10 @@
+from pandas_profiling import ProfileReport
+
 from dqc.common.constants import MONITOR_RULES
 from dqc.common.simpleflake import get_next_id
 from dqc.database.storage.storage_template import find_, list_all, find_one, insert_one, update_
 from dqc.model.analysis.monitor_rule import MonitorRule
+from dqc.service.query.index import query_topic_data_by_datetime
 
 
 def load_global_rule_list():
@@ -45,3 +48,15 @@ def update_monitor_rule(monitor_rule: MonitorRule):
             {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code},
                      {"factorid": monitor_rule.factorId}]}, monitor_rule,
             MonitorRule, MONITOR_RULES)
+
+
+def topic_profile(topic, from_, to_):
+    topic_name = topic["name"]
+    df = query_topic_data_by_datetime(topic["name"], from_, to_, topic)
+    if df.empty:
+        return None
+    else:
+        profile = ProfileReport(df, title="{0} data profile report".format(topic_name), minimal=True)
+        return profile.to_json()
+
+
