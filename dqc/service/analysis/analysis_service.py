@@ -58,5 +58,3 @@ def topic_profile(topic, from_, to_):
     else:
         profile = ProfileReport(df, title="{0} data profile report".format(topic_name), minimal=True)
         return profile.to_json()
-
-
