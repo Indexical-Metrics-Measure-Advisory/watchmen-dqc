@@ -7,6 +7,6 @@ from dqc.rule.utils.topic_utils import check_factor_value
 
 def init():
     def factor_min_not_in_range(df: DataFrame, topic, rule: MonitorRule):
-        return  check_factor_value(df, topic, rule, check_min_not_in_range)
+        return check_factor_value(df, topic, rule, check_min_not_in_range)
 
     return factor_min_not_in_range

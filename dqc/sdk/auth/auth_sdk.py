@@ -12,13 +12,13 @@ def login(site):
     # print(auth_token)s
     return auth_token
 
+
 # login()
 
 
 def validate_token(token):
-    url = settings.WATCHMEN_HOST+"login/validate_token"
-    response = requests.get(url=url ,params={"token":token})
+    url = settings.WATCHMEN_HOST + "login/validate_token"
+    response = requests.get(url=url, params={"token": token})
 
     user = response.json()
     return user
-

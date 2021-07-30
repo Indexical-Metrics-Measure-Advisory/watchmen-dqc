@@ -1,5 +1,3 @@
-
-
 from pandas import DataFrame
 
 from dqc.model.analysis.monitor_rule import MonitorRule

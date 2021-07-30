@@ -7,6 +7,7 @@ PIPELINE_BY_ID = "pipeline_by_id"
 PIPELINES_BY_TOPIC_ID = "pipelines_by_topic_id"
 COLUMNS_BY_TABLE_NAME = "columns_by_table_name"
 
+
 class WatchmenCache(Cache):
     pass
 

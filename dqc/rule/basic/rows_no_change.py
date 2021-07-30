@@ -23,7 +23,7 @@ def init():
             current_count = len(df.index)
             prior_count = query_topic_data_count_by_datetime(topic, prior_start_date, prior_end_date)
 
-            if current_count <= prior_count*(coverage_rate/100):
+            if current_count <= prior_count * (coverage_rate / 100):
                 execute_result.topicResult.result = True
             else:
                 execute_result.topicResult.result = False

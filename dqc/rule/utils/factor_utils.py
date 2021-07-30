@@ -9,7 +9,6 @@ from dqc.model.analysis.monitor_rule import MonitorRule
 log = logging.getLogger("app." + __name__)
 
 
-
 def __check_date_time(cell):
     try:
         if isinstance(cell, str):
@@ -57,9 +56,9 @@ def find_factor_by_name(factor_list, factor_name):
 
 
 def __convert_pandas_type(factor_type):
-    if factor_type in ["number", "unsigned","sequence"]:
+    if factor_type in ["number", "unsigned", "sequence"]:
         return "float64"
-    elif factor_type in [ "year", "half-year", "quarter", "month", "half-month", "ten-days", "week-of-year",
+    elif factor_type in ["year", "half-year", "quarter", "month", "half-month", "ten-days", "week-of-year",
                          "week-of-month", "half-week", "day-of-month", "day-of-week", "day-kind", "hour", "hour-kind",
                          "minute", "second", "millisecond", "am-pm"]:
         return "int64"
@@ -77,6 +76,7 @@ def check_date_type(df_series, factor_type):
 
 def check_is_empty(df_series, rule=None, factor=None):
     return df_series.empty
+
 
 # def check_is_blank(df_series, rule=None, factor=None):
 #     return df_series
@@ -97,22 +97,22 @@ def check_min_not_in_range(df_series, rule, factor=None):
     return check_value_not_in_range(df_min, rule)
 
 
-def check_median_not_in_range(df_series, rule,factor=None):
+def check_median_not_in_range(df_series, rule, factor=None):
     df_med = df_series.median()
     return check_value_not_in_range(df_med, rule)
 
 
-def check_avg_not_in_range(df_series, rule,factor=None):
+def check_avg_not_in_range(df_series, rule, factor=None):
     df_mean = df_series.mean()
     return check_value_not_in_range(df_mean, rule)
 
 
-def check_std_not_in_range(df_series, rule,factor=None):
+def check_std_not_in_range(df_series, rule, factor=None):
     df_std = df_series.std()
-    return check_value_not_in_range(df_std, rule,factor=None)
+    return check_value_not_in_range(df_std, rule, factor=None)
 
 
-def check_mismatch_regex(df_series, rule:MonitorRule, factor):
+def check_mismatch_regex(df_series, rule: MonitorRule, factor):
     regexp = rule.params.regexp
     if regexp is None:
         raise ValueError("regexp is empty")
@@ -120,33 +120,34 @@ def check_mismatch_regex(df_series, rule:MonitorRule, factor):
     return not df_series.str.match(regexp)
 
 
-def check_match_regex(df_series, rule:MonitorRule, factor):
+def check_match_regex(df_series, rule: MonitorRule, factor):
     regexp = rule.params.regexp
     if regexp is None:
         raise ValueError("regexp is empty")
     return df_series.str.match(regexp)
 
-def check_str_length_mismatch(df_series,rule,factor=None):
+
+def check_str_length_mismatch(df_series, rule, factor=None):
     df_len_str = df_series.str.len()
     if rule.params.length is None:
-        raise  ValueError("length is empty")
+        raise ValueError("length is empty")
     length = rule.params.length
     return df_len_str != length
 
 
-def check_str_length_not_in_range(df_series,rule,factor=None):
+def check_str_length_not_in_range(df_series, rule, factor=None):
     df_len_str = df_series.str.len()
-    return check_df_value_not_in_range(df_len_str,rule)
+    return check_df_value_not_in_range(df_len_str, rule)
 
 
-def check_quantile_not_in_range(df_series, rule,factor=None):
+def check_quantile_not_in_range(df_series, rule, factor=None):
     df_quantile = df_series.quantile()
-    return  check_value_not_in_range(df_quantile, rule)
+    return check_value_not_in_range(df_quantile, rule)
 
 
-def check_value_not_in_range(value, rule,factor=None):
+def check_value_not_in_range(value, rule, factor=None):
     if rule.params.min is None or rule.params.max is None:
-        raise ValueError("min {0} or max {1} is None".format(rule.params.min,rule.params.max))
+        raise ValueError("min {0} or max {1} is None".format(rule.params.min, rule.params.max))
 
     range_min = int(rule.params.min)
     range_max = int(rule.params.max)

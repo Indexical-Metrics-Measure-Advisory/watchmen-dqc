@@ -1,5 +1,3 @@
-import traceback
-
 from fastapi import HTTPException
 from starlette import status
 from starlette.requests import Request
@@ -7,9 +5,8 @@ from starlette.requests import Request
 from dqc.sdk.auth.auth_sdk import validate_token
 
 
-def get_current_user(request: Request) :
+def get_current_user(request: Request):
     authorization: str = request.headers.get("Authorization")
-
 
     if not authorization:
         scheme, param = "", ""
@@ -26,17 +23,10 @@ def get_current_user(request: Request) :
         try:
             user = validate_token(token)
             return user
-        except :
+        except:
             # print(traceback.format_exc())
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Not authenticated",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-
-
-
-
-
-
-

@@ -6,7 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 from dqc.common.log import log
 from dqc.config.config import settings
 from dqc.job.index import init_jobs
-from dqc.router import common, catalog, analysis
+from dqc.router import common, analysis
 
 log.init()
 

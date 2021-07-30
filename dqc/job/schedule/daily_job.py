@@ -8,7 +8,6 @@ from dqc.job.schedule.common import load_topic_list_without_raw_topic, execute_t
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.service.analysis.analysis_service import load_global_rule_list, load_topic_rule_list_by_topic_id
 
-
 log = logging.getLogger("app." + __name__)
 
 

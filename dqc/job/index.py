@@ -32,7 +32,6 @@ def group_by_statistical_interval(rules: List[MonitorRule]):
 
 
 def init_jobs():
-
     rules = load_monitor_rule_all()
 
     group_by_statistical_interval_results = group_by_statistical_interval(rules)

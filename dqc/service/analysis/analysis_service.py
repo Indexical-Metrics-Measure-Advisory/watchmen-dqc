@@ -1,3 +1,5 @@
+import logging
+
 from pandas_profiling import ProfileReport
 
 from dqc.common.constants import MONITOR_RULES
@@ -6,6 +8,7 @@ from dqc.database.storage.storage_template import find_, list_all, find_one, ins
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.service.query.index import query_topic_data_by_datetime
 
+log = logging.getLogger("app." + __name__)
 
 def load_global_rule_list():
     return find_({"grade": "global"}, MonitorRule, MONITOR_RULES)
@@ -56,7 +59,7 @@ def topic_profile(topic, from_, to_):
     if df.empty:
         return None
     else:
-
-        profile = ProfileReport(df.fillna(''), title="{0} data profile report".format(topic_name), minimal=True)
+        log.info("memory_usage {0} bytes".format(df.memory_usage(deep=True).sum()))
+        profile = ProfileReport(df, title="{0} data profile report".format(topic_name), minimal=True)
         json =  profile.to_json()
         return json

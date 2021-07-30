@@ -18,12 +18,9 @@ class Settings(BaseSettings):
 
     ALGORITHM = "HS256"
 
-
     STORAGE_ENGINE: str = "mongo"
 
-
     PROJECT_NAME: str = "local-test"
-
 
     MONGO_HOST: str = "localhost"
     MONGO_PORT: int = 27017
@@ -31,13 +28,11 @@ class Settings(BaseSettings):
     MONGO_USERNAME: str = None
     MONGO_PASSWORD: str = None
 
-
     PRESTO_HOST = "localhost"
     PRESTO_PORT = 8088
     PRESTO_USER = "the_user"
     PRESTO_CATALOG = "mysql"
     PRESTO_SCHEMA = "watchmen"
-
 
     MYSQL_HOST: str = ""
     MYSQL_PORT: int = 3306
@@ -59,7 +54,7 @@ class Settings(BaseSettings):
 
     JOB_FLAG: bool = False
     WATCHMEN_NAME: str = "local"
-    WATCHMEN_HOST : str = "http://localhost:8000/"
+    WATCHMEN_HOST: str = "http://localhost:8000/"
     WATCHMEN_PAT: str = "kUWBTfFL_rclOQ0r7_IRDA"
 
     class Config:

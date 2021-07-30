@@ -79,6 +79,7 @@ def build_data_pages(pagination, result, item_count):
 def check_fake_id(id: str) -> bool:
     return id.startswith("f-")
 
+
 #
 # def is_presto_varchar_type(factor_type):
 #     date_types = [ADDRESS, CONTINENT, REGION, COUNTRY, PROVINCE, CITY, DISTRICT, ROAD, COMMUNITY, FLOOR, RESIDENCE_TYPE,

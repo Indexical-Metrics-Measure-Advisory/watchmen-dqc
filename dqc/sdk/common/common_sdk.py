@@ -4,7 +4,6 @@ import requests
 from pydantic import BaseModel
 
 from dqc.config.config import settings
-from dqc.sdk.auth.auth_sdk import login
 from dqc.sdk.utils.index import build_headers
 
 
@@ -22,5 +21,3 @@ def import_instance(instance):
         return response.json()
     else:
         print(response.text)
-
-

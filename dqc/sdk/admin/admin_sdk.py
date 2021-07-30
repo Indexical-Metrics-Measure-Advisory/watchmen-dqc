@@ -8,7 +8,7 @@ from dqc.sdk.utils.index import build_headers
 
 def load_topic_list(names):
     headers = build_headers()
-    response = requests.post(settings.WATCHMEN_HOST+ "topic/list/name", data=json.dumps(names),
+    response = requests.post(settings.WATCHMEN_HOST + "topic/list/name", data=json.dumps(names),
                              headers=headers)
 
     return response.json()
@@ -24,7 +24,7 @@ def load_all_topic_list():
     return response.json()
 
 
-def get_topic_by_id( topic_id):
+def get_topic_by_id(topic_id):
     headers = build_headers()
     response = requests.get(settings.WATCHMEN_HOST + "topic", params={"topic_id": topic_id},
                             headers=headers)

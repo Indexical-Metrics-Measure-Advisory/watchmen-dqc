@@ -40,7 +40,7 @@ def init():
         factor_list = topic["factors"]
         if rule.factorId is not None:
             return find_factor(factor_list, rule.factorId)
-        elif rule.grade == "global" or rule.grade=="topic":
+        elif rule.grade == "global" or rule.grade == "topic":
             return factor_list
 
     return factor_mismatch_type
