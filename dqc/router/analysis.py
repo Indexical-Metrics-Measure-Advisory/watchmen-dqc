@@ -17,7 +17,15 @@ from dqc.service.analysis.analysis_service import load_global_rule_list, load_to
     create_monitor_rule, update_monitor_rule, load_monitor_rule, topic_profile
 from dqc.service.query.index import query_rule_results_by_datetime
 
+# import re
+
 router = APIRouter()
+
+json_constant_map = {
+    '-Infinity': float('-Infinity'),
+    'Infinity': float('Infinity'),
+    'NaN': None,
+}
 
 
 class MonitorRulesCriteria(BaseModel):
@@ -70,4 +78,10 @@ def generate_topic_profile(topic_id: str, date: str, current_user=Depends(deps.g
     topic = get_topic_by_id(topic_id)
     from_, to_ = get_date_range_with_end_date("daily", query_date)
     data = topic_profile(topic, from_, to_)
-    return json.loads(data)
+    if data:
+        return json.loads(
+            data,
+            parse_constant=lambda constant: json_constant_map[constant],
+        )
+    else:
+        return None

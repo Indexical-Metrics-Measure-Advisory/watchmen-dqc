@@ -56,5 +56,7 @@ def topic_profile(topic, from_, to_):
     if df.empty:
         return None
     else:
-        profile = ProfileReport(df, title="{0} data profile report".format(topic_name), minimal=True)
-        return profile.to_json()
+
+        profile = ProfileReport(df.fillna(''), title="{0} data profile report".format(topic_name), minimal=True)
+        json =  profile.to_json()
+        return json
