@@ -76,6 +76,8 @@ async def query_rule_results(req: MonitorRuleLogRequest, current_user=Depends(de
 def generate_topic_profile(topic_id: str, date: str, current_user=Depends(deps.get_current_user)):
     query_date = arrow.get(date)
     topic = get_topic_by_id(topic_id)
+
+
     from_, to_ = get_date_range_with_end_date("daily", query_date)
     data = topic_profile(topic, from_, to_)
     if data:

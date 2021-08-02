@@ -158,8 +158,6 @@ def get_date_range(statistical_interval: str):
 
 
 def get_date_range_with_end_date(statistical_interval, end_date):
-    # TODO
-    # end_date = end_date.shift(days=1)
     if statistical_interval == "daily":
         start = end_date.shift(days=-1)
         return start, end_date
