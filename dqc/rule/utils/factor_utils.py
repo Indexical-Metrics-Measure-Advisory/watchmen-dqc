@@ -61,7 +61,7 @@ def __convert_pandas_type(factor_type):
     elif factor_type in ["year", "half-year", "quarter", "month", "half-month", "ten-days", "week-of-year",
                          "week-of-month", "half-week", "day-of-month", "day-of-week", "day-kind", "hour", "hour-kind",
                          "minute", "second", "millisecond", "am-pm"]:
-        return "int64"
+        return "float64"
     elif factor_type in ["datetime", "full-datetime", "date", "data-of-birth"]:
         return "datetime64"
     elif factor_type == "boolean":
