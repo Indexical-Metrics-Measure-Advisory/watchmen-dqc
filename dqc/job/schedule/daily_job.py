@@ -13,7 +13,7 @@ log = logging.getLogger("app." + __name__)
 
 def __run_execute_rule(execute_topic_list, enabled_rules):
     for execute_topic in execute_topic_list:
-        topic_name = build_collection_name(execute_topic["name"])
+        topic_name = build_collection_name(execute_topic.name)
         log.info("check topic {}".format(topic_name))
 
         execute_topic_rule(enabled_rules, execute_topic, "daily")
@@ -32,11 +32,11 @@ def run():
 
 def execute_topic_rules(execute_topic_list):
     for execute_topic in execute_topic_list:
-        rule_list = load_topic_rule_list_by_topic_id(execute_topic["topicId"])
+        rule_list = load_topic_rule_list_by_topic_id(execute_topic.topicId)
         enabled_rules = __find_execute_rule(rule_list)
 
         if enabled_rules:
-            topic_name = build_collection_name(execute_topic["name"])
+            topic_name = build_collection_name(execute_topic.name)
             log.info("check topic {}".format(topic_name))
             execute_topic_rule(enabled_rules, execute_topic, "daily")
 
