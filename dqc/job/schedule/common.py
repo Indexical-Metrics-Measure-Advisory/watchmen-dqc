@@ -9,7 +9,7 @@ from dqc.common.constants import TOPIC_RULE, FACTOR_RULE
 from dqc.common.utils.data_utils import get_date_range
 from dqc.model.analysis.rule_result import RuleExecuteResult
 from dqc.sdk.admin.admin_sdk import load_all_topic_list
-from dqc.sdk.common.common_sdk import import_instance, InstanceRequest
+from dqc.sdk.common.common_sdk import import_instance, InstanceRequest, get_datasource_by_id
 from dqc.service.query.index import query_topic_data_by_datetime
 
 log = logging.getLogger("app." + __name__)
@@ -20,13 +20,19 @@ RULE_MODULE_PATH = "dqc.rule.basic."
 def load_topic_list_without_raw_topic():
     topic_list = load_all_topic_list()
     # print(topic_list)
-    filtered = filter(lambda topic: topic["type"] != "raw" and topic["kind"] == "business", topic_list)
+    filtered = filter(lambda topic: topic["type"] != "raw" and topic.get("kind") == "business", topic_list)
+    # print(filtered)
     return [Topic.parse_obj(result) for result in list(filtered)]
 
 
-def get_topic_data(topic, from_date, to_date):
+def get_topic_data(topic:Topic, from_date, to_date):
+
+
     try:
-        return query_topic_data_by_datetime(topic["name"], from_date, to_date, topic)
+        if topic.dataSourceId:
+            datasource = get_datasource_by_id(topic.dataSourceId)
+            return query_topic_data_by_datetime(topic.name, from_date, to_date, topic,datasource)
+
     except TrinoUserError as error:
         log.error(error)
         if error.error_name == "TABLE_NOT_FOUND":
@@ -58,13 +64,15 @@ def save_rule_result(rule_result_summary: RuleExecuteResult):
     if rule_result_summary and rule_result_summary.ruleType == TOPIC_RULE:
         if trigger_rule(rule_result_summary.topicResult):
             rule_result_summary.topicResult.result = bool(rule_result_summary.topicResult.result)
-            import_instance(InstanceRequest(code="system_rule_result", data=rule_result_summary.topicResult))
+            import_instance(InstanceRequest(code="system_rule_result", data=rule_result_summary.topicResult,
+                                            tenantId=rule_result_summary.tenantId))
     elif rule_result_summary and rule_result_summary.ruleType == FACTOR_RULE:
         factor_results = rule_result_summary.factorResult
         for factor_result in factor_results:
             if trigger_rule(factor_result):
                 factor_result.result = bool(factor_result.result)
-                import_instance(InstanceRequest(code="system_rule_result", data=factor_result))
+                import_instance(InstanceRequest(code="system_rule_result", data=factor_result,
+                                                tenantId=rule_result_summary.tenantId))
 
 
 def execute_topic_rule(enabled_rules, execute_topic, interval):

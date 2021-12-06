@@ -27,15 +27,15 @@ def load_monitor_rule_all():
     return storage_template.list_all(MonitorRule, MONITOR_RULES)
 
 
-def load_monitor_rule(monitor_rule):
+def load_monitor_rule(monitor_rule,current_user=None):
     if monitor_rule.factorId is None:
         return storage_template.find_one(
-            {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code}]},
+            {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code},{"tenantid":current_user.tenantId}]},
             MonitorRule, MONITOR_RULES)
     else:
         return storage_template.find_one(
             {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code},
-                     {"factorid": monitor_rule.factorId}]},
+                     {"factorid": monitor_rule.factorId},{"tenantid":current_user.tenantId}]},
             MonitorRule, MONITOR_RULES)
 
 
@@ -46,21 +46,22 @@ def create_monitor_rule(monitor_rule: MonitorRule,current_user):
 
 
 def update_monitor_rule(monitor_rule: MonitorRule,current_user):
+    monitor_rule.tenantId = current_user.tenantId
     if monitor_rule.factorId is None:
         return storage_template.update_one_first(
-            {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code}]},
+            {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code},{"tenantid":current_user.tenantId}]},
             monitor_rule,
             MonitorRule, MONITOR_RULES)
     else:
         return storage_template.update_one_first(
             {"and": [{"topicid": monitor_rule.topicId}, {"grade": monitor_rule.grade}, {"code": monitor_rule.code},
-                     {"factorid": monitor_rule.factorId}]}, monitor_rule,
+                     {"factorid": monitor_rule.factorId},{"tenantid":current_user.tenantId}]}, monitor_rule,
             MonitorRule, MONITOR_RULES)
 
 
-def topic_profile(topic, from_, to_):
-    topic_name = topic["name"]
-    df = query_topic_data_by_datetime(topic["name"], from_, to_, topic)
+def topic_profile(topic, from_, to_,data_source):
+    topic_name = topic.name
+    df = query_topic_data_by_datetime(topic.name, from_, to_, topic,data_source)
     if df.empty:
         return None
     else:

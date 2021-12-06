@@ -16,8 +16,8 @@ def data_is_empty(df: DataFrame):
 def init_topic_rule_result(rule, topic):
     execute_result = RuleExecuteResult()
     topic_rule_result = RuleResult()
-    topic_rule_result.topicId = topic["topicId"]
-    topic_rule_result.topicName = topic["name"]
+    topic_rule_result.topicId = topic.topicId
+    topic_rule_result.topicName = topic.name
     if rule:
         topic_rule_result.ruleCode = rule.code or ""
         topic_rule_result.severity = rule.severity or ""
@@ -28,10 +28,10 @@ def init_topic_rule_result(rule, topic):
 
 def init_factor_rule_result(rule, topic, factor):
     factor_rule_result = RuleResult()
-    factor_rule_result.topicId = topic["topicId"]
-    factor_rule_result.topicName = topic["name"]
-    factor_rule_result.factorId = factor["factorId"]
-    factor_rule_result.factorName = factor["name"]
+    factor_rule_result.topicId = topic.topicId
+    factor_rule_result.topicName = topic.name
+    factor_rule_result.factorId = factor.factorId
+    factor_rule_result.factorName = factor.name
     if rule:
         factor_rule_result.ruleCode = rule.code or ""
         factor_rule_result.severity = rule.severity or ""
@@ -57,7 +57,7 @@ def check_factor_value(df, topic, rule, check_function):
 
 
 def get_execute_factor_list(rule, topic):
-    factor_list = topic["factors"]
+    factor_list = topic.factors
     if rule.factorId is not None:
         return find_factor(factor_list, rule.factorId)
     else:

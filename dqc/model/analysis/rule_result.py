@@ -1,9 +1,10 @@
 from typing import List
 
+from model.model.common.watchmen_model import WatchmenModel
 from pydantic import BaseModel
 
 
-class RuleResult(BaseModel):
+class RuleResult(WatchmenModel):
     topicId: str = None
     topicName: str = None
     factorId: str = None
@@ -11,7 +12,9 @@ class RuleResult(BaseModel):
     ruleCode: str = None
     result: bool = None
     severity: str = None
-    params: dict = {}
+    tenant_id_: str = None
+    params: dict = {},
+
 
 
 class RuleExecuteResult(BaseModel):

@@ -40,14 +40,14 @@ def __try_convert_pandas_type(df_series, pandas_type):
 
 
 def find_factor(factor_list, factor_id):
-    factor_filtered = filter(lambda factor: factor["factorId"] == factor_id,
+    factor_filtered = filter(lambda factor: factor.factorId == factor_id,
                              factor_list)
 
     return factor_filtered
 
 
 def find_factor_by_name(factor_list, factor_name):
-    factor_filtered = list(filter(lambda factor: factor["name"].lower() == factor_name,
+    factor_filtered = list(filter(lambda factor: factor.name.lower() == factor_name,
                                   factor_list))
     if factor_filtered:
         return factor_filtered[0]
