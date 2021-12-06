@@ -1,4 +1,5 @@
 import requests
+from model.model.common.user import User
 
 from dqc.config.config import settings
 
@@ -19,6 +20,5 @@ def login(site):
 def validate_token(token):
     url = settings.WATCHMEN_HOST + "login/validate_token"
     response = requests.get(url=url, params={"token": token})
-
     user = response.json()
-    return user
+    return User.parse_obj(user)

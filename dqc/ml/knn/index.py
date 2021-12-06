@@ -21,8 +21,8 @@ def __clean_data(df: DataFrame, factor_list=[]):
         else:
             str_columns.append(column)
 
-    print(df)
-    print(str_columns)
+    # print(df)
+    # print(str_columns)
     unstandardized_data = pd.get_dummies(
         df,
         columns=str_columns,

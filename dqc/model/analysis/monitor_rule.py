@@ -1,3 +1,4 @@
+from model.model.common.watchmen_model import WatchmenModel
 from pydantic import BaseModel
 
 
@@ -15,7 +16,7 @@ class MonitorRuleParameters(BaseModel):
     factorId: str = None
 
 
-class MonitorRule(BaseModel):
+class MonitorRule(WatchmenModel):
     ruleId: str = None
     code: str = None
     grade: str = None
@@ -23,4 +24,5 @@ class MonitorRule(BaseModel):
     enabled: bool = False
     topicId: str = None
     factorId: str = None
+    tenantId:str = None
     params: MonitorRuleParameters = None

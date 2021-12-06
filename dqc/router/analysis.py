@@ -50,9 +50,9 @@ async def save_monitor_rule(rule_list: List[MonitorRule], current_user=Depends(d
             monitor_rule.ruleId = get_next_id()
         result = load_monitor_rule(monitor_rule)
         if result is None:
-            create_monitor_rule(monitor_rule)
+            create_monitor_rule(monitor_rule,current_user)
         else:
-            update_monitor_rule(monitor_rule)
+            update_monitor_rule(monitor_rule,current_user)
     return rule_list
 
 
