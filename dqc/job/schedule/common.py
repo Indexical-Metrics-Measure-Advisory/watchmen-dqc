@@ -2,6 +2,7 @@ import importlib
 import logging
 import traceback
 
+from model.model.topic.topic import Topic
 from trino.exceptions import TrinoUserError
 
 from dqc.common.constants import TOPIC_RULE, FACTOR_RULE
@@ -20,7 +21,7 @@ def load_topic_list_without_raw_topic():
     topic_list = load_all_topic_list()
     # print(topic_list)
     filtered = filter(lambda topic: topic["type"] != "raw" and topic["kind"] == "business", topic_list)
-    return list(filtered)
+    return [Topic.parse_obj(result) for result in list(filtered)]
 
 
 def get_topic_data(topic, from_date, to_date):
@@ -79,6 +80,7 @@ def execute_topic_rule(enabled_rules, execute_topic, interval):
                 try:
                     rule_result = rule_func(data_frame, execute_topic, enabled_rule)
                     # print(rule_result)
+                    rule_result.tenantId = execute_topic.tenantId
                     save_rule_result(rule_result)
                 except Exception as e:
                     log.error(e)

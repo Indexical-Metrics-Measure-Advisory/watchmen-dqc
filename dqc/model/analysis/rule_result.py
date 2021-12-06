@@ -18,3 +18,4 @@ class RuleExecuteResult(BaseModel):
     ruleType: str = None
     topicResult: RuleResult = None
     factorResult: List[RuleResult] = []
+    tenantId:str = None
