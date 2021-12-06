@@ -72,19 +72,15 @@ def execute_topic_rule(enabled_rules, execute_topic, interval):
         start, end = get_date_range(interval)
         data_frame = get_topic_data(execute_topic, start, end)
         for enabled_rule in enabled_rules:
-
             log.info("run rule {}".format(enabled_rule.code))
-
             rule_func = find_rule_func(enabled_rule.code)
             if rule_func is not None:
                 try:
                     rule_result = rule_func(data_frame, execute_topic, enabled_rule)
-                    # print(rule_result)
                     rule_result.tenantId = execute_topic.tenantId
                     save_rule_result(rule_result)
                 except Exception as e:
                     log.error(e)
-
                     log.error(traceback.format_exc())
             else:
                 log.warning("rule not exists {}".format(enabled_rule.code))

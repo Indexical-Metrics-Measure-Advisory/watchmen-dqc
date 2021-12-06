@@ -14,7 +14,7 @@ class InstanceRequest(BaseModel):
 
 def import_instance(instance):
     headers = build_headers()
-    response = requests.post(settings.WATCHMEN_HOST + "topic/data", data=instance.json(),
+    response = requests.post(settings.WATCHMEN_HOST + "pipeline/data/async", data=instance.json(),
                              headers=headers)
 
     if response.status_code == 200:
