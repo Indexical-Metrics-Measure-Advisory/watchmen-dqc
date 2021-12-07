@@ -56,8 +56,20 @@ class Settings(BaseSettings):
     WATCHMEN_NAME: str = "local"
     WATCHMEN_HOST: str = "http://localhost:8000/"
     WATCHMEN_PAT: str = "kUWBTfFL_rclOQ0r7_IRDA"
-    # DAILY_JOB:str
+    #
     DATAFRAME_TYPE:str="pandas"
+    JOB_TRIGGER:str = "cron"
+    DAILY_DAY_OF_WEEK:str ="mon-sun"
+    DAILY_HOURS:int = 23
+    DAILY_MINUTES:int=59
+    WEEKLY_DAY_OF_WEEK:str ="mon"
+    WEEKLY_HOURS:int=23
+    WEEKLY_MINUTES:int=59
+    MONTHLY_DAY:str = "1"
+    MONTHLY_HOURS:int=23
+    MONTHLY_MINUTES:int=59
+
+
 
 
     class Config:

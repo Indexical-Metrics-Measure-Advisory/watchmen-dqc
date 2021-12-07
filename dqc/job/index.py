@@ -40,12 +40,16 @@ def init_jobs():
         scheduler = AsyncIOScheduler()
         if "daily" in group_by_statistical_interval_results:
             print("init daily job ")
-            scheduler.add_job(daily_job.run, 'cron', day_of_week='mon-sun', hour=11, minute=58)
+            scheduler.add_job(daily_job.run, settings.JOB_TRIGGER, day_of_week=settings.DAILY_DAY_OF_WEEK,
+                              hour=settings.DAILY_HOURS, minute=settings.DAILY_MINUTES)
         if "weekly" in group_by_statistical_interval_results:
             print("init weekly job ")
-            scheduler.add_job(weekly_job.run, 'cron', day_of_week='mon', hour=23, minute=59)
+            scheduler.add_job(weekly_job.run, settings.JOB_TRIGGER, day_of_week=settings.WEEKLY_DAY_OF_WEEK,
+                              hour=settings.WEEKLY_HOURS,
+                              minute=settings.WEEKLY_MINUTES)
         if "monthly" in group_by_statistical_interval_results:
             print("init monthly job ")
-            scheduler.add_job(monthly_job.run, 'cron', day='1', hour=23, minute=59)
+            scheduler.add_job(monthly_job.run, settings.JOB_TRIGGER, day=settings.MONTHLY_DAY,
+                              hour=settings.MONTHLY_HOURS, minute=settings.MONTHLY_MINUTES)
 
         scheduler.start()
