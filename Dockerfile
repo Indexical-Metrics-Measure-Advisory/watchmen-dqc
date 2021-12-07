@@ -19,6 +19,7 @@ RUN pip install fastapi
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
 RUN poetry install
+RUN pip install dask==2021.11.2
 RUN pip install watchmen-storage-engine
 RUN pip install watchmen-model
 
