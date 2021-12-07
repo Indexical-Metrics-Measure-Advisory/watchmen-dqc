@@ -1,4 +1,5 @@
 import json
+import traceback
 from datetime import datetime
 from typing import List
 
@@ -73,8 +74,12 @@ async def query_monitor_rules(req: MonitorRuleRequest, current_user=Depends(deps
 async def query_rule_results(req: MonitorRuleLogRequest, current_user:User=Depends(deps.get_current_user)):
     topic:Topic = load_topic_by_name_and_tenant("rule_aggregate",current_user.tenantId)
     data_source:DataSource = get_datasource_by_id(topic.dataSourceId)
-    results = query_rule_results_by_datetime(req.criteria,data_source,current_user.tenantId)
-    return results
+    try:
+        results = query_rule_results_by_datetime(req.criteria,data_source,current_user.tenantId)
+        return results
+    except Exception as e:
+        trace = traceback.format_exc()
+        print(trace)
 
 
 @router.get("/dqc/topic/profile", tags=["analytics"])

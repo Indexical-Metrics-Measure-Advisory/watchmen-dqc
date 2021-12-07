@@ -85,7 +85,6 @@ def generate_monitor_log_query(criteria: MonitorRuleLogCriteria, data_source, te
 
 def query_rule_results_by_datetime(criteria, data_source, tenant_id):
     topic_sql = generate_monitor_log_query(criteria, data_source, tenant_id)
-
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(topic_sql)
