@@ -91,7 +91,7 @@ def query_rule_results_by_datetime(criteria, data_source, tenant_id):
     cur.execute(topic_sql)
     rows = cur.fetchall()
     columns = list([desc[0] for desc in cur.description])
-    df = pd.DataFrame(rows, columns=columns)
+    df = __build_data_frame(rows,columns)
     rule_results = []
     for row in df.itertuples(index=True, name='Pandas'):
         rule_log = MonitorRuleLog()

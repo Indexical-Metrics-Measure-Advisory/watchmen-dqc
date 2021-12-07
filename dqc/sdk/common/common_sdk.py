@@ -15,8 +15,8 @@ class InstanceRequest(BaseModel):
     tenantId:str = None
 
 
-def import_instance(instance):
-    headers = build_headers()
+def import_instance(instance,current_user:User):
+    headers = build_headers(current_user)
     response = requests.post(settings.WATCHMEN_HOST + "pipeline/data/async/tenant", data=instance.json(),
                              headers=headers)
 

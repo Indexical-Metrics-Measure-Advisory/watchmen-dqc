@@ -2,6 +2,7 @@ import importlib
 import logging
 import traceback
 
+from model.model.common.user import User
 from model.model.topic.topic import Topic
 from trino.exceptions import TrinoUserError
 
@@ -58,19 +59,19 @@ def trigger_rule(topic_result):
     return topic_result.result
 
 
-def save_rule_result(rule_result_summary: RuleExecuteResult):
+def save_rule_result(rule_result_summary: RuleExecuteResult,current_user:User):
     if rule_result_summary and rule_result_summary.ruleType == TOPIC_RULE:
         if trigger_rule(rule_result_summary.topicResult):
             rule_result_summary.topicResult.result = bool(rule_result_summary.topicResult.result)
             import_instance(InstanceRequest(code="system_rule_result", data=rule_result_summary.topicResult,
-                                            tenantId=rule_result_summary.tenantId))
+                                            tenantId=rule_result_summary.tenantId),current_user)
     elif rule_result_summary and rule_result_summary.ruleType == FACTOR_RULE:
         factor_results = rule_result_summary.factorResult
         for factor_result in factor_results:
             if trigger_rule(factor_result):
                 factor_result.result = bool(factor_result.result)
                 import_instance(InstanceRequest(code="system_rule_result", data=factor_result,
-                                                tenantId=rule_result_summary.tenantId))
+                                                tenantId=rule_result_summary.tenantId),current_user)
 
 
 def execute_topic_rule(enabled_rules, execute_topic, interval):
