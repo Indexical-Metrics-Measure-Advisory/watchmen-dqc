@@ -56,6 +56,9 @@ class Settings(BaseSettings):
     WATCHMEN_NAME: str = "local"
     WATCHMEN_HOST: str = "http://localhost:8000/"
     WATCHMEN_PAT: str = "kUWBTfFL_rclOQ0r7_IRDA"
+    # DAILY_JOB:str
+    DATAFRAME_TYPE:str="pandas"
+
 
     class Config:
         env_file = '.env'

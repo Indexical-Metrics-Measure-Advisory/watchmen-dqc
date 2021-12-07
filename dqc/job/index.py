@@ -40,7 +40,7 @@ def init_jobs():
         scheduler = AsyncIOScheduler()
         if "daily" in group_by_statistical_interval_results:
             print("init daily job ")
-            scheduler.add_job(daily_job.run, 'cron', day_of_week='mon-sun', hour=13, minute=59)
+            scheduler.add_job(daily_job.run, 'cron', day_of_week='mon-sun', hour=11, minute=58)
         if "weekly" in group_by_statistical_interval_results:
             print("init weekly job ")
             scheduler.add_job(weekly_job.run, 'cron', day_of_week='mon', hour=23, minute=59)

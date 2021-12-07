@@ -26,8 +26,6 @@ def load_topic_list_without_raw_topic():
 
 
 def get_topic_data(topic:Topic, from_date, to_date):
-
-
     try:
         if topic.dataSourceId:
             datasource = get_datasource_by_id(topic.dataSourceId)

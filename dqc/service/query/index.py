@@ -1,12 +1,25 @@
 import arrow
-import pandas as pd
+
+
 from model.model.topic.topic import Topic
 from storage.model.data_source import DataSource
 
+from dqc.config.config import settings
 from dqc.model.analysis.monitor_rule_log import MonitorRuleLog
 from dqc.model.analysis.rule_result_criteria import MonitorRuleLogCriteria
 from dqc.presto.presto_client import get_connection
 from dqc.rule.utils.factor_utils import find_factor_by_name, __convert_pandas_type
+
+
+
+def __build_data_frame(rows,columns):
+    if settings.DATAFRAME_TYPE =="pandas":
+        import pandas as pd
+        return pd.DataFrame(rows ,columns=columns)
+    elif settings.DATAFRAME_TYPE == "dask":
+        import dask.dataframe as dd
+        return dd.DataFrame(rows,columns=columns)
+
 
 
 def query_topic_data_by_datetime(topic_name, from_datetime, to_datetime, topic:Topic=None,data_source:DataSource=None):
@@ -19,7 +32,7 @@ def query_topic_data_by_datetime(topic_name, from_datetime, to_datetime, topic:T
     cur.execute(topic_sql)
     rows = cur.fetchall()
     columns = list([desc[0] for desc in cur.description])
-    df = pd.DataFrame(rows, columns=columns)
+    df = __build_data_frame(rows,columns)
     if topic is None:
         return df
     else:
