@@ -1,8 +1,7 @@
 from typing import List
 
-from storage.common.mongo_model import MongoModel
-
 from dqc.model.analysis.expect_rule import ExpectRuleTopic
+from storage.common.mongo_model import MongoModel
 
 
 class TopicRule(MongoModel):

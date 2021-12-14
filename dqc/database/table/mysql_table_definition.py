@@ -26,7 +26,6 @@ class MysqlTableDefinition(TableDefinition):
                                    Column('lastmodified', Date, nullable=True)
                                    )
 
-
     def get_table_by_name(self, table_name):
         return self.get_meta_table(table_name)
 

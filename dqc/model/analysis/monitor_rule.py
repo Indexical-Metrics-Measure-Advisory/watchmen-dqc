@@ -24,5 +24,5 @@ class MonitorRule(WatchmenModel):
     enabled: bool = False
     topicId: str = None
     factorId: str = None
-    tenantId:str = None
+    tenantId: str = None
     params: MonitorRuleParameters = None

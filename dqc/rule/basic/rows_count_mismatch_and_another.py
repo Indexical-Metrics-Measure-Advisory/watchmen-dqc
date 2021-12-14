@@ -22,7 +22,7 @@ def init():
         data_source: DataSource = get_datasource_by_id(another_topic.dataSourceId)
 
         current_count = len(df.index)
-        prior_count = query_topic_data_count_by_datetime(another_topic, start_date, end_date,data_source)
+        prior_count = query_topic_data_count_by_datetime(another_topic, start_date, end_date, data_source)
         if current_count != prior_count:
             execute_result.topicResult.result = True
         else:

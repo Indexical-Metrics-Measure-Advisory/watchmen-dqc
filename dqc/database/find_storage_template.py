@@ -1,6 +1,5 @@
-from storage.storage.storage_template import StorageTemplate
-
 from storage.storage.engine_adaptor import MONGO, MYSQL, ORACLE
+from storage.storage.storage_template import StorageTemplate
 
 from dqc.config.config import settings
 
@@ -15,6 +14,3 @@ def find_storage_template():
     elif settings.STORAGE_ENGINE == ORACLE:
         from dqc.database.table import oracle_table_definition
         return StorageTemplate(oracle_table_definition)
-
-
-

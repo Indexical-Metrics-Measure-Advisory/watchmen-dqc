@@ -2,16 +2,11 @@ import requests
 from model.model.common.user import User
 
 from dqc.config.config import settings
+from dqc.model.token_user import TokenUser
 
 
-import requests
-from model.model.common.user import User
-
-from dqc.config.config import settings
-
-
-def login(user:User):
-    login_data = {"username": user.name, "password":user.password, "grant_type": "password"}
+def login(user: User):
+    login_data = {"username": user.name, "password": user.password, "grant_type": "password"}
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
     response = requests.post(settings.WATCHMEN_HOST + "login/access-token", data=login_data,
                              headers=headers)
@@ -22,6 +17,6 @@ def login(user:User):
 def validate_token(token):
     url = settings.WATCHMEN_HOST + "login/validate_token"
     response = requests.get(url=url, params={"token": token})
-    return User.parse_obj(response.json())
-
-
+    user = TokenUser.parse_obj(response.json())
+    user.token = token
+    return user

@@ -16,9 +16,8 @@ class RuleResult(WatchmenModel):
     params: dict = {},
 
 
-
 class RuleExecuteResult(BaseModel):
     ruleType: str = None
     topicResult: RuleResult = None
     factorResult: List[RuleResult] = []
-    tenantId:str = None
+    tenantId: str = None

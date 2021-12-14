@@ -53,7 +53,7 @@ async def save_monitor_rule(rule_list: List[MonitorRule], current_user=Depends(d
     for monitor_rule in rule_list:
         if monitor_rule.ruleId is None:
             monitor_rule.ruleId = get_next_id()
-        result = load_monitor_rule(monitor_rule,current_user)
+        result = load_monitor_rule(monitor_rule, current_user)
         if result is None:
             create_monitor_rule(monitor_rule, current_user)
         else:
@@ -71,11 +71,11 @@ async def query_monitor_rules(req: MonitorRuleRequest, current_user=Depends(deps
 
 
 @router.post("/dqc/rule/result/query", tags=["admin"], response_model=List[MonitorRuleLog])
-async def query_rule_results(req: MonitorRuleLogRequest, current_user:User=Depends(deps.get_current_user)):
-    topic:Topic = load_topic_by_name_and_tenant("rule_aggregate",current_user.tenantId)
-    data_source:DataSource = get_datasource_by_id(topic.dataSourceId)
+async def query_rule_results(req: MonitorRuleLogRequest, current_user: User = Depends(deps.get_current_user)):
+    topic: Topic = load_topic_by_name_and_tenant("rule_aggregate", current_user.tenantId)
+    data_source: DataSource = get_datasource_by_id(topic.dataSourceId)
     try:
-        results = query_rule_results_by_datetime(req.criteria,data_source,current_user.tenantId)
+        results = query_rule_results_by_datetime(req.criteria, data_source, current_user.tenantId)
         return results
     except Exception as e:
         trace = traceback.format_exc()
@@ -85,10 +85,10 @@ async def query_rule_results(req: MonitorRuleLogRequest, current_user:User=Depen
 @router.get("/dqc/topic/profile", tags=["analytics"])
 def generate_topic_profile(topic_id: str, date: str, current_user=Depends(deps.get_current_user)):
     query_date = arrow.get(date)
-    topic = get_topic_by_id(topic_id)
+    topic = get_topic_by_id(topic_id, current_user)
     data_source: DataSource = get_datasource_by_id(topic.dataSourceId)
     from_, to_ = get_date_range_with_end_date("daily", query_date)
-    data = topic_profile(topic, from_, to_,data_source)
+    data = topic_profile(topic, from_, to_, data_source)
     if data:
         return json.loads(
             data,

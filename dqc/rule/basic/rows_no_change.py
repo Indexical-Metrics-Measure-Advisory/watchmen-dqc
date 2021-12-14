@@ -25,7 +25,7 @@ def init():
                 raise ValueError("coverage rate is None")
             current_count = len(df.index)
             data_source: DataSource = get_datasource_by_id(topic.dataSourceId)
-            prior_count = query_topic_data_count_by_datetime(topic, prior_start_date, prior_end_date,data_source)
+            prior_count = query_topic_data_count_by_datetime(topic, prior_start_date, prior_end_date, data_source)
 
             if current_count <= prior_count * (coverage_rate / 100):
                 execute_result.topicResult.result = True

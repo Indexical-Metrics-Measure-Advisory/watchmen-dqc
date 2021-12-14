@@ -15,18 +15,18 @@ def get_pid(table_name):
 
 
 monitor_rules = Table("monitor_rules", metadata,
-                           Column('ruleid', String(60), primary_key=True),
-                           Column('code', String(45), nullable=False),
-                           Column('grade', String(45), nullable=True),
-                           Column('severity', String(45), nullable=True),
-                           Column('enabled', Boolean, nullable=True),
-                           Column('topicid', String(45), nullable=True),
-                           Column('factorid', String(45), nullable=True),
-                           Column('tenantid', String(60), nullable=False),
-                           Column('params', CLOB, nullable=True),
-                           Column('createtime', String(50), nullable=True),
-                           Column('lastmodified', Date, nullable=True)
-                           )
+                      Column('ruleid', String(60), primary_key=True),
+                      Column('code', String(45), nullable=False),
+                      Column('grade', String(45), nullable=True),
+                      Column('severity', String(45), nullable=True),
+                      Column('enabled', Boolean, nullable=True),
+                      Column('topicid', String(45), nullable=True),
+                      Column('factorid', String(45), nullable=True),
+                      Column('tenantid', String(60), nullable=False),
+                      Column('params', CLOB, nullable=True),
+                      Column('createtime', String(50), nullable=True),
+                      Column('lastmodified', Date, nullable=True)
+                      )
 
 
 def get_table_by_name(table_name):

@@ -1,13 +1,11 @@
-from model.model.common.user import User
-
 from dqc.config.config import settings
-from dqc.sdk.auth.auth_sdk import login
+from dqc.model.token_user import TokenUser
 
 
-def build_headers(current_user:User=None):
+def build_headers(current_user: TokenUser = None):
     if current_user:
-        access_token = login(current_user)
-        headers = {"Content-Type": "application/json", "Authorization": "Bearer " + access_token}
+        # access_token = login(current_user)
+        headers = {"Content-Type": "application/json", "Authorization": "Bearer " + current_user.token}
         return headers
     else:
         headers = {"Content-Type": "application/json", "Authorization": "pat " + settings.WATCHMEN_PAT}

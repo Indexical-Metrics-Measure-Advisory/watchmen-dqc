@@ -4,7 +4,6 @@ class TableDefinition(object):
         pid = self.get_pid(table_name)
         return pid
 
-
     def get_pid(self, table_name):
         if table_name == 'monitor_rules':
             pid = 'ruleid'

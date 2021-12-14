@@ -12,10 +12,10 @@ from dqc.sdk.utils.index import build_headers
 class InstanceRequest(BaseModel):
     code: str = None
     data: Any = None
-    tenantId:str = None
+    tenantId: str = None
 
 
-def import_instance(instance,current_user:User):
+def import_instance(instance, current_user: User):
     headers = build_headers(current_user)
     response = requests.post(settings.WATCHMEN_HOST + "pipeline/data/async/tenant", data=instance.json(),
                              headers=headers)
@@ -31,4 +31,3 @@ def get_datasource_by_id(datasource_id):
     response = requests.get(settings.WATCHMEN_HOST + "datasource/id", params={"datasource_id": datasource_id},
                             headers=headers)
     return DataSource.parse_obj(response.json())
-
