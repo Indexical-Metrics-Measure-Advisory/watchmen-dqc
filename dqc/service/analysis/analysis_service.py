@@ -4,7 +4,8 @@ from pandas_profiling import ProfileReport
 from storage.storage import storage_template
 
 from dqc.common.constants import MONITOR_RULES
-from dqc.common.simpleflake import get_surrogate_key
+
+from watchmen_boot.guid.snowflake import get_surrogate_key
 from dqc.database.find_storage_template import find_storage_template
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.service.query.index import query_topic_data_by_datetime

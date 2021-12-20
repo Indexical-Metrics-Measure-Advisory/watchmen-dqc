@@ -11,7 +11,7 @@ from pydantic.main import BaseModel
 from watchmen_boot.storage.model.data_source import DataSource
 
 from dqc.common import deps
-from dqc.common.simpleflake import get_next_id
+from watchmen_boot.guid.snowflake import get_surrogate_key
 from dqc.common.utils.data_utils import get_date_range_with_end_date
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.model.analysis.monitor_rule_log import MonitorRuleLog
@@ -52,7 +52,7 @@ class TopicProfileRequest(BaseModel):
 async def save_monitor_rule(rule_list: List[MonitorRule], current_user=Depends(deps.get_current_user)):
     for monitor_rule in rule_list:
         if monitor_rule.ruleId is None:
-            monitor_rule.ruleId = get_next_id()
+            monitor_rule.ruleId = get_surrogate_key()
         result = load_monitor_rule(monitor_rule, current_user)
         if result is None:
             create_monitor_rule(monitor_rule, current_user)
