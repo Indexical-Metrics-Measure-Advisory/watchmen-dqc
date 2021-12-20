@@ -1,6 +1,6 @@
 import arrow
 from model.model.topic.topic import Topic
-from storage.model.data_source import DataSource
+from watchmen_boot.storage.model.data_source import DataSource
 
 from dqc.config.config import settings
 from dqc.model.analysis.monitor_rule_log import MonitorRuleLog

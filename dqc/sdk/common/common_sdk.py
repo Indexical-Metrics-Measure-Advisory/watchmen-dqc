@@ -3,7 +3,7 @@ from typing import Any
 import requests
 from model.model.common.user import User
 from pydantic import BaseModel
-from storage.model.data_source import DataSource
+from watchmen_boot.storage.model.data_source import DataSource
 
 from dqc.config.config import settings
 from dqc.sdk.utils.index import build_headers

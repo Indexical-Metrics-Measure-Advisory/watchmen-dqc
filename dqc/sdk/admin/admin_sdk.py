@@ -26,7 +26,6 @@ def load_topic_by_name_and_tenant(name, tenant_id):
 
 def load_all_topic_list():
     headers = build_headers()
-    # print(headers)
     response = requests.get(settings.WATCHMEN_HOST + "topic/all/tenant",
                             headers=headers)
 

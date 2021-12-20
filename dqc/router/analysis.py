@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends
 from model.model.common.user import User
 from model.model.topic.topic import Topic
 from pydantic.main import BaseModel
-from storage.model.data_source import DataSource
+from watchmen_boot.storage.model.data_source import DataSource
 
 from dqc.common import deps
 from dqc.common.simpleflake import get_next_id

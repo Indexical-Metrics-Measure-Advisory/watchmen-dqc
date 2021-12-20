@@ -1,5 +1,5 @@
 from pandas import DataFrame
-from storage.model.data_source import DataSource
+from watchmen_boot.storage.model.data_source import DataSource
 
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.rule.utils.date_utils import get_date_range
