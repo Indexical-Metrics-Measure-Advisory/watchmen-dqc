@@ -40,6 +40,7 @@ def get_topic_data(topic: Topic, from_date, to_date):
 
 
 def find_rule_func(rule_code, rule_type=None):
+
     rule_name = rule_code.replace("-", "_")
     try:
         if rule_type == TOPIC_RULE:

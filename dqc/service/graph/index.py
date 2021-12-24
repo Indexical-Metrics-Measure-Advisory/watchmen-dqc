@@ -85,7 +85,7 @@
 #             self.g.add_vertex(name=pipeline_node["pipelineId"], type="pipeline", refId=pipeline_node["pipelineId"],
 #                               nodeName=pipeline_node["name"])
 #             if "on" in pipeline_node and pipeline_node["on"] is not None and pipeline_node["on"]["filters"]:
-#                 pass  ## TODO on
+#                 pass
 #
 #             if "stages" in pipeline_node:
 #                 for stage in pipeline_node["stages"]:
