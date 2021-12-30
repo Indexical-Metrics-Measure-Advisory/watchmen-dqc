@@ -6,7 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 from dqc.common.log import log
 from dqc.config.config import settings
 from dqc.job.index import init_jobs
-from dqc.router import common, analysis
+from dqc.router import common, analysis, catalog
 
 log.init()
 
@@ -25,6 +25,7 @@ app.add_middleware(
 # app.include_router(catalog.router)
 app.include_router(analysis.router)
 app.include_router(common.router)
+app.include_router(catalog.router)
 
 if settings.JOB_FLAG:
     init_jobs()
