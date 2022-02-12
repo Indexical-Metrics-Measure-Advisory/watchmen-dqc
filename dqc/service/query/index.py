@@ -68,16 +68,20 @@ def generate_monitor_log_query(criteria: MonitorRuleLogCriteria, data_source, te
     start = arrow.get(criteria.startDate)
     end = arrow.get(criteria.endDate)
     if criteria.ruleCode is None:
-        return "select sum(count) as count,rulecode from {0} where tenant_id_ = '{1}' and update_time_ between timestamp '{2}' and  timestamp '{3}' GROUP BY rulecode".format(
+        return "select sum(count) as count,rulecode from {0} where tenant_id_ = '{1}' and update_time_ between " \
+               "timestamp '{2}' and  timestamp '{3}' GROUP BY rulecode".format(
             __build_topic_name('rule_aggregate', data_source), tenant_id, start.format('YYYY-MM-DD HH:mm:ss ZZ'),
             end.format('YYYY-MM-DD HH:mm:ss ZZ'))
     elif criteria.topicId is None:
-        return "select sum(count) as count,rulecode,topicid from {0} where  tenant_id_ = '{1}' and rulecode = '{2}' and update_time_ between timestamp '{3}' and  timestamp '{4}' GROUP BY rulecode,topicid".format(
+        return "select sum(count) as count,rulecode,topicid from {0} where  tenant_id_ = '{1}' and rulecode = '{2}' " \
+               "and update_time_ between timestamp '{3}' and  timestamp '{4}' GROUP BY rulecode,topicid".format(
             __build_topic_name('rule_aggregate', data_source), tenant_id, criteria.ruleCode,
             start.format('YYYY-MM-DD HH:mm:ss ZZ'),
             end.format('YYYY-MM-DD HH:mm:ss ZZ'))
     elif criteria.factorId is None:
-        return "select sum(count) as count,rulecode,topicid, factorid  from {0} where tenant_id_ = '{1}' and rulecode = '{2}' and topicid = '{3}' and update_time_ between timestamp '{4}' and  timestamp '{5}' GROUP BY rulecode,topicid,factorid".format(
+        return "select sum(count) as count,rulecode,topicid, factorid  from {0} where tenant_id_ = '{1}' and rulecode " \
+               "= '{2}' and topicid = '{3}' and update_time_ between timestamp '{4}' and  timestamp '{5}' GROUP BY " \
+               "rulecode,topicid,factorid".format(
             __build_topic_name('rule_aggregate', data_source), tenant_id, criteria.ruleCode, criteria.topicId,
             start.format('YYYY-MM-DD HH:mm:ss ZZ'),
             end.format('YYYY-MM-DD HH:mm:ss ZZ'))

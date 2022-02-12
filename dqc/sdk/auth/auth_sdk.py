@@ -15,8 +15,11 @@ def login(user: User):
 
 
 def validate_token(token):
-    url = settings.WATCHMEN_HOST + "login/validate_token"
-    response = requests.get(url=url, params={"token": token})
-    user = TokenUser.parse_obj(response.json())
-    user.token = token
-    return user
+    url = settings.WATCHMEN_HOST + "login/authorization"
+    response = requests.get(url=url, params={"authorization": token})
+    if response.status_code == 401:
+        raise ValueError("authorization failed")
+    elif response.status_code == 200:
+        user = TokenUser.parse_obj(response.json())
+        user.token = token
+        return user

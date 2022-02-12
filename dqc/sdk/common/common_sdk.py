@@ -26,8 +26,8 @@ def import_instance(instance, current_user: User):
         print(response.text)
 
 
-def get_datasource_by_id(datasource_id):
-    headers = build_headers()
+def get_datasource_by_id(datasource_id, current_user: User):
+    headers = build_headers(current_user)
     response = requests.get(settings.WATCHMEN_HOST + "datasource/id", params={"datasource_id": datasource_id},
                             headers=headers)
     return DataSource.parse_obj(response.json())
