@@ -1,7 +1,7 @@
 import datetime
 import logging
 
-from typing import Optional
+from typing import Optional, Dict
 
 from model.model.topic.topic import Topic
 from model.model.topic.factor import Factor
@@ -54,6 +54,6 @@ class FactorUseCast(AbstractRule):
         else:
             return False
 
-    def get_factor_data_type(self):
+    def get_factor_data_type(self) -> Dict:
         result = {self.factor.name.lower(): convert_pandas_type(self.factor.type)}
         return result
