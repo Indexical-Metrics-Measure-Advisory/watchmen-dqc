@@ -24,7 +24,8 @@ class FactorAndAnother(AbstractRule):
         super().execute()
         if self.rule.params.factorId:
             another_factor = self.get_factor(self.topic, self.rule.params.factorId)
-            return self.match_factor_match_another(self.factor.name, another_factor.name)
+            if self.factor.type == another_factor.type:
+                return self.match_factor_match_another(self.factor.name, another_factor.name)
         else:
             return False
 

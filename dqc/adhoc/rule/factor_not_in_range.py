@@ -20,6 +20,15 @@ class FactorNotInRange(AbstractRule):
 
     def execute(self) -> bool:
         super().execute()
+        if self.rule.params:
+            if self.rule.params.min and self.rule.params.max:
+                result = self.match_factor_not_in_range(self.rule.params.min,
+                                                        self.rule.params.max)
+                return result["count"] != 0
+            else:
+                return True
+        else:
+            return True
 
     def get_factor_not_in_range_sql(self, min_, max_) -> str:
         criterion_sql = "{field} not between {min} and {max}".format(
@@ -30,8 +39,8 @@ class FactorNotInRange(AbstractRule):
         sql = self.get_count_with_criterion_sql(criterion_sql)
         return sql
 
-    def match_factor_not_range(self) -> Dict:
-        query_sql = self.get_factor_not_in_range_sql()
+    def match_factor_not_in_range(self, min_, max_) -> Dict:
+        query_sql = self.get_factor_not_in_range_sql(min_, max_)
         log.info("factor not in range: {sql}".format(sql=query_sql))
         conn = get_connection()
         cursor = conn.cursor()

@@ -5,16 +5,20 @@ from dqc.adhoc.constants import RuleCode
 from watchmen_boot.storage.model.data_source import DataSource
 
 from dqc.adhoc.rule.factor_and_another import FactorAndAnother
+from dqc.adhoc.rule.factor_avg_not_in_range import FactorAvgNotInRange
 from dqc.adhoc.rule.factor_common_value_not_in_range import FactorCommonValueNotInRange
 from dqc.adhoc.rule.factor_common_value_over_coverage import FactorCommonValueOverCoverage
 from dqc.adhoc.rule.factor_empty_over_coverage import FactorEmptyOverCoverage
 from dqc.adhoc.rule.factor_is_blank import FactorIsBlank
 from dqc.adhoc.rule.factor_is_empty import FactorIsEmpty
 from dqc.adhoc.rule.factor_match_regexp import FactorMatchRegexp
+from dqc.adhoc.rule.factor_max_not_in_range import FactorMaxNotInRange
+from dqc.adhoc.rule.factor_min_not_in_range import FactorMinNotInRange
 from dqc.adhoc.rule.factor_mismatch_date_type import FactorMismatchDateType
 from dqc.adhoc.rule.factor_mismatch_enum import FactorMismatchEnum
 from dqc.adhoc.rule.factor_mismatch_regexp import FactorMismatchRegexp
 from dqc.adhoc.rule.factor_mismatch_type import FactorMismatchType
+from dqc.adhoc.rule.factor_not_in_range import FactorNotInRange
 from dqc.adhoc.rule.factor_string_length_mismatch import FactorStringLengthMismatch
 from dqc.adhoc.rule.factor_string_length_not_in_range import FactorStringLengthNotInRange
 from dqc.adhoc.rule.factor_use_cast import FactorUseCast
@@ -74,6 +78,14 @@ class RuleTemplate:
             return self.rule_result(self.factor_mismatch_regexp())
         elif self.rule.code == RuleCode.FACTOR_AND_ANOTHER:
             return self.rule_result(self.factor_and_another())
+        elif self.rule.code == RuleCode.FACTOR_NOT_IN_RANGE:
+            return self.rule_result(self.factor_not_in_range())
+        elif self.rule.code == RuleCode.FACTOR_AVG_NOT_IN_RANGE:
+            return self.rule_result(self.factor_avg_not_in_range())
+        elif self.rule.code == RuleCode.FACTOR_MIN_NOT_IN_RANGE:
+            return self.rule_result(self.factor_min_not_in_range())
+        elif self.rule.code == RuleCode.FACTOR_MAX_NOT_IN_RANGE:
+            return self.rule_result(self.factor_max_not_in_range())
         else:
             return self.rule_result(False)
 
@@ -212,6 +224,38 @@ class RuleTemplate:
                                        self.rule,
                                        self.get_factor(self.topic, self.rule.factorId),
                                        self.process_date)
+        return rule_entity.execute()
+
+    def factor_not_in_range(self) -> bool:
+        rule_entity = FactorNotInRange(self.get_schema(),
+                                       self.topic,
+                                       self.rule,
+                                       self.get_factor(self.topic, self.rule.factorId),
+                                       self.process_date)
+        return rule_entity.execute()
+
+    def factor_avg_not_in_range(self) -> bool:
+        rule_entity = FactorAvgNotInRange(self.get_schema(),
+                                          self.topic,
+                                          self.rule,
+                                          self.get_factor(self.topic, self.rule.factorId),
+                                          self.process_date)
+        return rule_entity.execute()
+
+    def factor_min_not_in_range(self) -> bool:
+        rule_entity = FactorMinNotInRange(self.get_schema(),
+                                          self.topic,
+                                          self.rule,
+                                          self.get_factor(self.topic, self.rule.factorId),
+                                          self.process_date)
+        return rule_entity.execute()
+
+    def factor_max_not_in_range(self) -> bool:
+        rule_entity = FactorMaxNotInRange(self.get_schema(),
+                                          self.topic,
+                                          self.rule,
+                                          self.get_factor(self.topic, self.rule.factorId),
+                                          self.process_date)
         return rule_entity.execute()
 
     def get_schema(self) -> str:
