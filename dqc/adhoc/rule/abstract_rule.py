@@ -1,5 +1,6 @@
 import datetime
 from abc import abstractmethod, ABC
+from decimal import Decimal
 from typing import Optional
 
 from model.model.topic.topic import Topic
@@ -103,3 +104,15 @@ class AbstractRule(ABC):
         for factor in topic.factors:
             if factor.factorId == factor_id:
                 return factor
+
+    def check_value_not_in_range(self, value) -> bool:
+        if self.rule.params:
+            if self.rule.params.min and self.rule.params.max:
+                range_min = int(self.rule.params.min)
+                range_max = int(self.rule.params.max)
+                result = range_min < value < range_max
+                return not result
+            else:
+                return True
+        else:
+            return True

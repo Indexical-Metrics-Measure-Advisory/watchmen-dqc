@@ -1,3 +1,5 @@
+import logging
+
 from dqc.adhoc.constants import FactorType
 from dqc.adhoc.rule.abstract_rule import AbstractRule
 import datetime
@@ -10,6 +12,8 @@ from model.model.topic.factor import Factor
 from dqc.common.utils.data_utils import build_collection_name
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.presto.presto_client import get_connection
+
+log = logging.getLogger("app." + __name__)
 
 
 class FactorMismatchType(AbstractRule):
@@ -63,7 +67,7 @@ class FactorMismatchType(AbstractRule):
 
     def match_unsigned(self):
         sql = self.match_unsigned_sql()
-        print(sql)
+        log.info(sql)
         conn = get_connection()
         cur = conn.cursor()
         cur.execute(sql)
@@ -89,7 +93,7 @@ class FactorMismatchType(AbstractRule):
 
     def match_date(self) -> bool:
         sql = self.match_date_sql()
-        print(sql)
+        log.info(sql)
         conn = get_connection()
         cur = conn.cursor()
         cur.execute(sql)
@@ -155,7 +159,7 @@ class FactorMismatchType(AbstractRule):
 
     def match_sequence(self) -> bool:
         sql = self.match_sequence_sql()
-        print(sql)
+        log.info(sql)
         conn = get_connection()
         cur = conn.cursor()
         cur.execute(sql)
@@ -171,7 +175,7 @@ class FactorMismatchType(AbstractRule):
 
     def match_number(self) -> bool:
         sql = self.match_number_sql()
-        print(sql)
+        log.info(sql)
         conn = get_connection()
         cur = conn.cursor()
         cur.execute(sql)

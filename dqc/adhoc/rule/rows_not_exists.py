@@ -1,4 +1,5 @@
 import datetime
+import logging
 from typing import Optional, Dict
 
 from model.model.topic.topic import Topic
@@ -8,6 +9,8 @@ from dqc.adhoc.rule.abstract_rule import AbstractRule
 from dqc.common.utils.data_utils import build_collection_name
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.presto.presto_client import get_connection
+
+log = logging.getLogger("app." + __name__)
 
 
 class RowsNotExists(AbstractRule):
@@ -37,7 +40,7 @@ class RowsNotExists(AbstractRule):
 
     def match_rows_not_exists(self) -> Dict:
         sql = self.get_rows_not_exists_sql()
-        print(sql)
+        log.info(sql)
         conn = get_connection()
         cur = conn.cursor()
         cur.execute(sql)

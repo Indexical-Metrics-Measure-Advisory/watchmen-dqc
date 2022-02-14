@@ -1,3 +1,4 @@
+import logging
 
 from dqc.adhoc.rule.abstract_rule import AbstractRule
 import datetime
@@ -10,6 +11,8 @@ from model.model.topic.factor import Factor
 
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.presto.presto_client import get_connection
+
+log = logging.getLogger("app." + __name__)
 
 
 class AbstractCommonValue(AbstractRule, ABC):
@@ -39,7 +42,7 @@ class AbstractCommonValue(AbstractRule, ABC):
 
     def get_mode_value(self) -> Dict:
         sql = self.get_value_mode_sql()
-        print(sql)
+        log.info(sql)
         conn = get_connection()
         cur = conn.cursor()
         cur.execute(sql)
@@ -55,7 +58,7 @@ class AbstractCommonValue(AbstractRule, ABC):
 
     def get_count_value(self):
         sql = self.get_count_sql()
-        print(sql)
+        log.info(sql)
         conn = get_connection()
         cur = conn.cursor()
         cur.execute(sql)

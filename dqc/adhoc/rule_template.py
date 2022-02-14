@@ -13,12 +13,15 @@ from dqc.adhoc.rule.factor_is_blank import FactorIsBlank
 from dqc.adhoc.rule.factor_is_empty import FactorIsEmpty
 from dqc.adhoc.rule.factor_match_regexp import FactorMatchRegexp
 from dqc.adhoc.rule.factor_max_not_in_range import FactorMaxNotInRange
+from dqc.adhoc.rule.factor_median_not_in_range import FactorMedianNotInRange
 from dqc.adhoc.rule.factor_min_not_in_range import FactorMinNotInRange
 from dqc.adhoc.rule.factor_mismatch_date_type import FactorMismatchDateType
 from dqc.adhoc.rule.factor_mismatch_enum import FactorMismatchEnum
 from dqc.adhoc.rule.factor_mismatch_regexp import FactorMismatchRegexp
 from dqc.adhoc.rule.factor_mismatch_type import FactorMismatchType
 from dqc.adhoc.rule.factor_not_in_range import FactorNotInRange
+from dqc.adhoc.rule.factor_quantile_not_in_range import FactorQuantileNotInRange
+from dqc.adhoc.rule.factor_stdev_not_in_range import FactorStdevNotInRange
 from dqc.adhoc.rule.factor_string_length_mismatch import FactorStringLengthMismatch
 from dqc.adhoc.rule.factor_string_length_not_in_range import FactorStringLengthNotInRange
 from dqc.adhoc.rule.factor_use_cast import FactorUseCast
@@ -86,6 +89,12 @@ class RuleTemplate:
             return self.rule_result(self.factor_min_not_in_range())
         elif self.rule.code == RuleCode.FACTOR_MAX_NOT_IN_RANGE:
             return self.rule_result(self.factor_max_not_in_range())
+        elif self.rule.code == RuleCode.FACTOR_MEDIAN_NOT_IN_RANGE:
+            return self.rule_result(self.factor_median_not_in_range())
+        elif self.rule.code == RuleCode.FACTOR_QUANTILE_NOT_IN_RANGE:
+            return self.rule_result(self.factor_quantile_not_in_range())
+        elif self.rule.code == RuleCode.FACTOR_STDEV_NOT_IN_RANGE:
+            return self.rule_result(self.factor_stdev_not_in_range())
         else:
             return self.rule_result(False)
 
@@ -256,6 +265,30 @@ class RuleTemplate:
                                           self.rule,
                                           self.get_factor(self.topic, self.rule.factorId),
                                           self.process_date)
+        return rule_entity.execute()
+
+    def factor_median_not_in_range(self) -> bool:
+        rule_entity = FactorMedianNotInRange(self.get_schema(),
+                                             self.topic,
+                                             self.rule,
+                                             self.get_factor(self.topic, self.rule.factorId),
+                                             self.process_date)
+        return rule_entity.execute()
+
+    def factor_quantile_not_in_range(self) -> bool:
+        rule_entity = FactorQuantileNotInRange(self.get_schema(),
+                                               self.topic,
+                                               self.rule,
+                                               self.get_factor(self.topic, self.rule.factorId),
+                                               self.process_date)
+        return rule_entity.execute()
+
+    def factor_stdev_not_in_range(self) -> bool:
+        rule_entity = FactorStdevNotInRange(self.get_schema(),
+                                            self.topic,
+                                            self.rule,
+                                            self.get_factor(self.topic, self.rule.factorId),
+                                            self.process_date)
         return rule_entity.execute()
 
     def get_schema(self) -> str:

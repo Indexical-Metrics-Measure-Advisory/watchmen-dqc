@@ -1,6 +1,7 @@
 import datetime
-from typing import Tuple, Optional, Dict
-
+from typing import Tuple, Optional, Dict, Union
+import pandas as pd
+import dask.dataframe as dd
 import arrow
 
 from dqc.adhoc.constants import FactorType
@@ -34,13 +35,11 @@ def get_date_range_with_end_date(statistical_interval: Optional[str],
         return end_date.floor('day'), end_date.ceil('day')
 
 
-def build_data_frame(rows, columns, data_type: Dict):
+def build_data_frame(rows, columns, data_type: Dict) -> Union[pd.DataFrame, dd.DataFrame]:
     if settings.DATAFRAME_TYPE == "pandas":
-        import pandas as pd
         data_frame = pd.DataFrame(rows, columns=columns)
         return data_frame.astype(data_type)
     elif settings.DATAFRAME_TYPE == "dask":
-        import dask.dataframe as dd
         data_frame = dd.DataFrame(rows, columns=columns)
         return data_frame.astype(data_type)
 
