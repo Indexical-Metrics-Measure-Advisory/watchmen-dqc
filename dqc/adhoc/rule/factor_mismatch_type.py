@@ -83,7 +83,7 @@ class FactorMismatchType(AbstractRule):
         sql = "SELECT CAST({field} AS date) " \
               "FROM {schema}.{table} " \
               "WHERE update_time_ between timestamp '{from_date}' and timestamp '{to_date}'".format(
-                    field=self.factor.name,
+                    field=self.factor.name.lower(),
                     schema=self.schema,
                     table=build_collection_name(self.topic.name),
                     from_date=self.from_date.format('YYYY-MM-DD HH:mm:ss'),

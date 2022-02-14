@@ -57,7 +57,7 @@ class AbstractRule(ABC):
         sql = "SELECT CAST({field} AS {type}) " \
               "FROM {schema}.{table} " \
               "WHERE update_time_ between timestamp '{from_date}' and timestamp '{to_date}'".format(
-            field=self.factor.name,
+            field=self.factor.name.lower(),
             type=data_type,
             schema=self.schema,
             table=build_collection_name(self.topic.name),
@@ -73,7 +73,7 @@ class AbstractRule(ABC):
         sql = "SELECT {field} " \
               "FROM {schema}.{table} " \
               "WHERE update_time_ between timestamp '{from_date}' and timestamp '{to_date}'".format(
-            field=factor_name,
+            field=factor_name.lower(),
             schema=self.schema,
             table=build_collection_name(self.topic.name),
             from_date=self.from_date.format('YYYY-MM-DD HH:mm:ss'),

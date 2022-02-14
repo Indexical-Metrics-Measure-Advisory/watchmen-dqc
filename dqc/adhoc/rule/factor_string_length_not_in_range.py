@@ -32,7 +32,7 @@ class FactorStringLengthNotInRange(AbstractRule):
 
     def get_string_length_not_in_range_sql(self, min_, max_) -> str:
         criterion_sql = "length({field}) not between {min} and {max} ".format(
-            field=self.factor.name,
+            field=self.factor.name.lower(),
             min=min_,
             max=max_
         )

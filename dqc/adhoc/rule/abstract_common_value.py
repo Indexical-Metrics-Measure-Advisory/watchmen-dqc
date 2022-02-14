@@ -32,7 +32,7 @@ class AbstractCommonValue(AbstractRule, ABC):
               "GROUP BY {field} " \
               "ORDER BY {field} DESC " \
               "LIMIT 1".format(
-                    field=self.factor.name,
+                    field=self.factor.name.lower(),
                     schema=self.schema,
                     table=build_collection_name(self.topic.name),
                     from_date=self.from_date.format('YYYY-MM-DD HH:mm:ss'),
