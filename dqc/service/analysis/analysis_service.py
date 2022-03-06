@@ -19,8 +19,11 @@ def load_global_rule_list():
     return storage_template.find_({"grade": "global"}, MonitorRule, MONITOR_RULES)
 
 
-def load_topic_rule_list_by_topic_id(topic_id):
-    results = storage_template.find_({"topicid": topic_id}, MonitorRule, MONITOR_RULES)
+def load_topic_rule_list_by_topic_id(topic_id,current_user):
+    results = storage_template.find_(
+        {"and": [{"topicid":topic_id},
+                 {"tenantid": current_user.tenantId}]}
+        , MonitorRule, MONITOR_RULES)
     return results
 
 

@@ -67,9 +67,10 @@ def query_topic_data_count_by_datetime(topic, from_datetime, to_datetime, data_s
 def generate_monitor_log_query(criteria: MonitorRuleLogCriteria, data_source, tenant_id):
     start = arrow.get(criteria.startDate)
     end = arrow.get(criteria.endDate)
+
     if criteria.ruleCode is None:
         return "select sum(count) as count,rulecode from {0} where tenant_id_ = '{1}' and update_time_ between timestamp '{2}' and  timestamp '{3}' GROUP BY rulecode".format(
-            __build_topic_name('rule_aggregate', data_source), tenant_id, start.format('YYYY-MM-DD HH:mm:ss ZZ'),
+                __build_topic_name('rule_aggregate', data_source), tenant_id, start.format('YYYY-MM-DD HH:mm:ss ZZ'),
             end.format('YYYY-MM-DD HH:mm:ss ZZ'))
     elif criteria.topicId is None:
         return "select sum(count) as count,rulecode,topicid from {0} where  tenant_id_ = '{1}' and rulecode = '{2}' and update_time_ between timestamp '{3}' and  timestamp '{4}' GROUP BY rulecode,topicid".format(

@@ -67,7 +67,7 @@ async def query_monitor_rules(req: MonitorRuleRequest, current_user=Depends(deps
     if criteria.grade == "global":
         return load_global_rule_list()
     else:
-        return load_topic_rule_list_by_topic_id(criteria.topicId)
+        return load_topic_rule_list_by_topic_id(criteria.topicId,current_user)
 
 
 @router.post("/dqc/rule/result/query", tags=["admin"], response_model=List[MonitorRuleLog])
@@ -76,6 +76,8 @@ async def query_rule_results(req: MonitorRuleLogRequest, current_user: User = De
     data_source: DataSource = get_datasource_by_id(topic.dataSourceId)
     try:
         results = query_rule_results_by_datetime(req.criteria, data_source, current_user.tenantId)
+
+        print(results)
         return results
     except Exception as e:
         trace = traceback.format_exc()
