@@ -69,7 +69,7 @@ def init():
             factor_filtered = get_execute_factor_list(rule, topic)
             for factor in factor_filtered:
                 factor_rule_result = init_factor_rule_result(rule, topic, factor)
-                value = df[factor["name"].lower()]
+                value = df[factor.name.lower()]
                 factor_rule_result.result = common_value_over_coverage(value, rule, factor)
                 factor_rule_result_list.append(factor_rule_result)
 

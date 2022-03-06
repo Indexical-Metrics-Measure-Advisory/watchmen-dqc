@@ -68,7 +68,7 @@ def update_monitor_rule(monitor_rule: MonitorRule, current_user):
 def topic_profile(topic, from_, to_, data_source):
     topic_name = topic.name
     df = query_topic_data_by_datetime(topic.name, from_, to_, topic, data_source)
-    if df.empty:
+    if df.empty or len(df.index) == 1:
         return None
     else:
         log.info("memory_usage {0} bytes".format(df.memory_usage(deep=True).sum()))

@@ -37,7 +37,7 @@ def init():
             return execute_result
 
     def get_execute_factor_list(rule, topic):
-        factor_list = topic["factors"]
+        factor_list = topic.factors
         if rule.factorId is not None:
             return find_factor(factor_list, rule.factorId)
         elif rule.grade == "global" or rule.grade == "topic":

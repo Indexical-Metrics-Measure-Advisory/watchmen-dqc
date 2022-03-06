@@ -9,7 +9,7 @@ from trino.exceptions import TrinoUserError
 from dqc.common.constants import TOPIC_RULE, FACTOR_RULE
 from dqc.common.utils.data_utils import get_date_range
 from dqc.model.analysis.rule_result import RuleExecuteResult
-from dqc.sdk.admin.admin_sdk import load_all_topic_list
+from dqc.sdk.admin.admin_sdk import load_all_topic_list, load_topic_list_by_tenant
 from dqc.sdk.common.common_sdk import import_instance, InstanceRequest, get_datasource_by_id
 from dqc.service.query.index import query_topic_data_by_datetime
 
@@ -18,18 +18,18 @@ log = logging.getLogger("app." + __name__)
 RULE_MODULE_PATH = "dqc.rule.basic."
 
 
-def load_topic_list_without_raw_topic():
-    topic_list = load_all_topic_list()
+def load_topic_list_without_raw_topic(current_user):
+    topic_list = load_all_topic_list(current_user)
     # print(topic_list)
     filtered = filter(lambda topic: topic["type"] != "raw" and topic.get("kind") == "business", topic_list)
     # print(filtered)
     return [Topic.parse_obj(result) for result in list(filtered)]
 
 
-def get_topic_data(topic: Topic, from_date, to_date):
+def get_topic_data(topic: Topic, from_date, to_date, current_user):
     try:
         if topic.dataSourceId:
-            datasource = get_datasource_by_id(topic.dataSourceId)
+            datasource = get_datasource_by_id(topic.dataSourceId, current_user)
             return query_topic_data_by_datetime(topic.name, from_date, to_date, topic, datasource)
 
     except TrinoUserError as error:
@@ -40,7 +40,6 @@ def get_topic_data(topic: Topic, from_date, to_date):
 
 
 def find_rule_func(rule_code, rule_type=None):
-
     rule_name = rule_code.replace("-", "_")
     try:
         if rule_type == TOPIC_RULE:
@@ -75,10 +74,10 @@ def save_rule_result(rule_result_summary: RuleExecuteResult, current_user: User)
                                                 tenantId=rule_result_summary.tenantId), current_user)
 
 
-def execute_topic_rule(enabled_rules, execute_topic, interval):
+def execute_topic_rule(enabled_rules, execute_topic, interval, current_user):
     try:
         start, end = get_date_range(interval)
-        data_frame = get_topic_data(execute_topic, start, end)
+        data_frame = get_topic_data(execute_topic, start, end, current_user)
         for enabled_rule in enabled_rules:
             log.info("run rule {}".format(enabled_rule.code))
             rule_func = find_rule_func(enabled_rule.code)
@@ -86,7 +85,7 @@ def execute_topic_rule(enabled_rules, execute_topic, interval):
                 try:
                     rule_result = rule_func(data_frame, execute_topic, enabled_rule)
                     rule_result.tenantId = execute_topic.tenantId
-                    save_rule_result(rule_result)
+                    save_rule_result(rule_result, current_user)
                 except Exception as e:
                     log.error(e)
                     log.error(traceback.format_exc())
@@ -96,3 +95,9 @@ def execute_topic_rule(enabled_rules, execute_topic, interval):
     except Exception as e:
         log.error(e)
         log.error(traceback.format_exc())
+
+
+def load_topic_list_without_raw_topic_by_tenant(current_user):
+    topic_list = load_topic_list_by_tenant(current_user)
+    filtered = filter(lambda topic: topic["type"] != "raw" and topic.get("kind") == "business", topic_list)
+    return [Topic.parse_obj(result) for result in list(filtered)]

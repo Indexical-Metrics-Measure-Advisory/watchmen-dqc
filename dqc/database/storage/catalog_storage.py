@@ -27,12 +27,13 @@ async def load_catalog_by_id(catalog_id: str, current_user):
                                      Catalog, CATALOGS
                                      )
 
-async def query_catalog_by_criteria(criteria:CatalogCriteria,current_user):
 
+async def query_catalog_by_criteria(criteria: CatalogCriteria, current_user):
     if criteria.name is None and criteria.topicId is None and criteria.techOwnerId is None and criteria.bizOwnerId is None:
-        return storage_template.find_({"tenantId":current_user.tenantId}, Catalog, CATALOGS)
+        return storage_template.find_({"tenantId": current_user.tenantId}, Catalog, CATALOGS)
 
-    return storage_template.find_({"and":[{"name":{"like":criteria.name}}]}, Catalog, CATALOGS)
+    return storage_template.find_({"and": [{"name": {"like": criteria.name}}]}, Catalog, CATALOGS)
+
 
 async def load_catalogs(current_user):
     return storage_template.find_({"tenantId": current_user.tenantId}, Catalog, CATALOGS)

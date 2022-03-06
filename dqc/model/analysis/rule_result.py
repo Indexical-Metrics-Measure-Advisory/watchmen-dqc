@@ -13,7 +13,7 @@ class RuleResult(WatchmenModel):
     result: bool = None
     severity: str = None
     tenant_id_: str = None
-    params: dict = {},
+    params: dict = {}
 
 
 class RuleExecuteResult(BaseModel):
