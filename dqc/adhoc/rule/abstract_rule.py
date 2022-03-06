@@ -1,10 +1,9 @@
 import datetime
 from abc import abstractmethod, ABC
-from decimal import Decimal
 from typing import Optional
 
-from model.model.topic.topic import Topic
 from model.model.topic.factor import Factor
+from model.model.topic.topic import Topic
 
 from dqc.adhoc.utils import get_from_to_date
 from dqc.common.utils.data_utils import build_collection_name

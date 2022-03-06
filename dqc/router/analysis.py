@@ -8,10 +8,10 @@ from fastapi import APIRouter, Depends
 from model.model.common.user import User
 from model.model.topic.topic import Topic
 from pydantic.main import BaseModel
+from watchmen_boot.guid.snowflake import get_surrogate_key
 from watchmen_boot.storage.model.data_source import DataSource
 
 from dqc.common import deps
-from watchmen_boot.guid.snowflake import get_surrogate_key
 from dqc.common.utils.data_utils import get_date_range_with_end_date
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.model.analysis.monitor_rule_log import MonitorRuleLog
@@ -67,7 +67,7 @@ async def query_monitor_rules(req: MonitorRuleRequest, current_user=Depends(deps
     if criteria.grade == "global":
         return load_global_rule_list()
     else:
-        return load_topic_rule_list_by_topic_id(criteria.topicId,current_user)
+        return load_topic_rule_list_by_topic_id(criteria.topicId, current_user)
 
 
 @router.post("/dqc/rule/result/query", tags=["admin"], response_model=List[MonitorRuleLog])

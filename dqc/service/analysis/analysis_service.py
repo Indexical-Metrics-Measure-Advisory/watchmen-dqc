@@ -2,10 +2,9 @@ import logging
 
 from pandas_profiling import ProfileReport
 from storage.storage import storage_template
+from watchmen_boot.guid.snowflake import get_surrogate_key
 
 from dqc.common.constants import MONITOR_RULES
-
-from watchmen_boot.guid.snowflake import get_surrogate_key
 from dqc.database.find_storage_template import find_storage_template
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.service.query.index import query_topic_data_by_datetime
@@ -19,9 +18,9 @@ def load_global_rule_list():
     return storage_template.find_({"grade": "global"}, MonitorRule, MONITOR_RULES)
 
 
-def load_topic_rule_list_by_topic_id(topic_id,current_user):
+def load_topic_rule_list_by_topic_id(topic_id, current_user):
     results = storage_template.find_(
-        {"and": [{"topicid":topic_id},
+        {"and": [{"topicid": topic_id},
                  {"tenantid": current_user.tenantId}]}
         , MonitorRule, MONITOR_RULES)
     return results

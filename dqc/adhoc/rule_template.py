@@ -1,9 +1,10 @@
-from typing import Optional
 import datetime
+from typing import Optional
+
 from model.model.topic.topic import Topic
-from dqc.adhoc.constants import RuleCode
 from watchmen_boot.storage.model.data_source import DataSource
 
+from dqc.adhoc.constants import RuleCode
 from dqc.adhoc.rule.factor_and_another import FactorAndAnother
 from dqc.adhoc.rule.factor_avg_not_in_range import FactorAvgNotInRange
 from dqc.adhoc.rule.factor_common_value_not_in_range import FactorCommonValueNotInRange

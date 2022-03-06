@@ -1,12 +1,11 @@
 import datetime
 from typing import Optional
 
+from model.model.topic.factor import Factor
+from model.model.topic.topic import Topic
+
 from dqc.adhoc.rule.abstract_common_value import AbstractCommonValue
 from dqc.adhoc.utils import get_from_to_date
-
-from model.model.topic.topic import Topic
-from model.model.topic.factor import Factor
-
 from dqc.model.analysis.monitor_rule import MonitorRule
 
 
@@ -32,4 +31,3 @@ class FactorCommonValueNotInRange(AbstractCommonValue):
             common_value_count = mode_value_result["count"]
             result = range_min < common_value_count < range_max
             return result
-

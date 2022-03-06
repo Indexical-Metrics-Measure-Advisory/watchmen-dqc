@@ -1,4 +1,3 @@
-from dqc.config.config import settings
 from dqc.model.token_user import TokenUser
 
 """

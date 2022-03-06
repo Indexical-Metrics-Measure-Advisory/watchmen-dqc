@@ -1,12 +1,11 @@
-import logging
-
-from dqc.adhoc.rule.abstract_factor_match_regexp import AbstractFactorMatchRegexp
 import datetime
+import logging
 from typing import Optional
 
-from model.model.topic.topic import Topic
 from model.model.topic.factor import Factor
+from model.model.topic.topic import Topic
 
+from dqc.adhoc.rule.abstract_factor_match_regexp import AbstractFactorMatchRegexp
 from dqc.model.analysis.monitor_rule import MonitorRule
 
 log = logging.getLogger("app." + __name__)
@@ -25,4 +24,3 @@ class FactorMismatchRegexp(AbstractFactorMatchRegexp):
             return match_count_result != total_count_result
         else:
             return False
-

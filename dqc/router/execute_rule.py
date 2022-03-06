@@ -1,5 +1,4 @@
 import datetime
-from datetime import date
 from typing import Optional
 
 from fastapi import APIRouter, Depends

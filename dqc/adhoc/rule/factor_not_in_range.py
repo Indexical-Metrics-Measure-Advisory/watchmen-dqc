@@ -2,8 +2,8 @@ import datetime
 import logging
 from typing import Optional, Dict
 
-from model.model.topic.topic import Topic
 from model.model.topic.factor import Factor
+from model.model.topic.topic import Topic
 
 from dqc.adhoc.rule.abstract_rule import AbstractRule
 from dqc.model.analysis.monitor_rule import MonitorRule

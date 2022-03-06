@@ -1,10 +1,9 @@
 import datetime
 import logging
-
 from typing import Optional, Dict
 
-from model.model.topic.topic import Topic
 from model.model.topic.factor import Factor
+from model.model.topic.topic import Topic
 
 from dqc.adhoc.rule.abstract_rule import AbstractRule
 from dqc.adhoc.utils import build_data_frame, convert_pandas_type, df_series_is_str

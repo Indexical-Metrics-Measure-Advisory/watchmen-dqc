@@ -1,14 +1,13 @@
+import datetime
 import logging
+from typing import Optional
+
+from model.model.topic.factor import Factor
+from model.model.topic.topic import Topic
+from trino.exceptions import TrinoUserError
 
 from dqc.adhoc.constants import FactorType
 from dqc.adhoc.rule.abstract_rule import AbstractRule
-import datetime
-from typing import Optional
-from trino.exceptions import TrinoUserError
-
-from model.model.topic.topic import Topic
-from model.model.topic.factor import Factor
-
 from dqc.common.utils.data_utils import build_collection_name
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.presto.presto_client import get_connection
@@ -83,12 +82,12 @@ class FactorMismatchType(AbstractRule):
         sql = "SELECT CAST({field} AS date) " \
               "FROM {schema}.{table} " \
               "WHERE update_time_ between timestamp '{from_date}' and timestamp '{to_date}'".format(
-                    field=self.factor.name.lower(),
-                    schema=self.schema,
-                    table=build_collection_name(self.topic.name),
-                    from_date=self.from_date.format('YYYY-MM-DD HH:mm:ss'),
-                    to_date=self.to_date.format('YYYY-MM-DD HH:mm:ss')
-                )
+            field=self.factor.name.lower(),
+            schema=self.schema,
+            table=build_collection_name(self.topic.name),
+            from_date=self.from_date.format('YYYY-MM-DD HH:mm:ss'),
+            to_date=self.to_date.format('YYYY-MM-DD HH:mm:ss')
+        )
         return sql
 
     def match_date(self) -> bool:
@@ -217,5 +216,3 @@ class FactorMismatchType(AbstractRule):
         row = cur.fetchone()
         result = self.get_count_result(row)
         return result
-
-

@@ -1,17 +1,16 @@
 import datetime
 import logging
 from abc import abstractmethod
-
 from typing import Optional, Dict, Union
 
-from model.model.topic.topic import Topic
+import dask.dataframe as dd
+import pandas as pd
 from model.model.topic.factor import Factor
+from model.model.topic.topic import Topic
 
 from dqc.adhoc.rule.abstract_rule import AbstractRule
 from dqc.adhoc.utils import build_data_frame, convert_pandas_type
 from dqc.model.analysis.monitor_rule import MonitorRule
-import pandas as pd
-import dask.dataframe as dd
 
 log = logging.getLogger("app." + __name__)
 
@@ -39,6 +38,3 @@ class AbstractFactorUsePandas(AbstractRule):
     def get_factor_data_type(self) -> Dict:
         result = {self.factor.name.lower(): convert_pandas_type(self.factor.type)}
         return result
-
-
-

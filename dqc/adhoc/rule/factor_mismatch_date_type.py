@@ -1,11 +1,11 @@
 import datetime
 from typing import Optional
 
-from dqc.adhoc.rule.factor_mismatch_type import FactorMismatchType
+from model.model.topic.factor import Factor
 from model.model.topic.topic import Topic
 
+from dqc.adhoc.rule.factor_mismatch_type import FactorMismatchType
 from dqc.model.analysis.monitor_rule import MonitorRule
-from model.model.topic.factor import Factor
 
 
 class FactorMismatchDateType(FactorMismatchType):
@@ -16,5 +16,3 @@ class FactorMismatchDateType(FactorMismatchType):
 
     def execute(self) -> bool:
         return super().execute()
-
-    

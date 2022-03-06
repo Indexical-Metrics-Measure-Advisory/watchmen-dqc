@@ -22,7 +22,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 app.include_router(analysis.router)
 app.include_router(common.router)
 app.include_router(catalog.router)

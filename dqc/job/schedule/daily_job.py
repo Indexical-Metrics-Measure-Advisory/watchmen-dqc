@@ -1,10 +1,8 @@
 import logging
 from typing import List
 
-import arrow
-
 from dqc.common.utils.data_utils import build_collection_name
-from dqc.job.schedule.common import load_topic_list_without_raw_topic, execute_topic_rule, \
+from dqc.job.schedule.common import execute_topic_rule, \
     load_topic_list_without_raw_topic_by_tenant
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.service.analysis.analysis_service import load_global_rule_list, load_topic_rule_list_by_topic_id

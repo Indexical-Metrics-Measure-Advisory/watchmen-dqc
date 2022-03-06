@@ -1,13 +1,12 @@
+import datetime
 import logging
 from abc import abstractmethod
-
-from dqc.adhoc.rule.abstract_rule import AbstractRule
-import datetime
 from typing import Optional, Tuple
 
-from model.model.topic.topic import Topic
 from model.model.topic.factor import Factor
+from model.model.topic.topic import Topic
 
+from dqc.adhoc.rule.abstract_rule import AbstractRule
 from dqc.model.analysis.monitor_rule import MonitorRule
 from dqc.presto.presto_client import get_connection
 
